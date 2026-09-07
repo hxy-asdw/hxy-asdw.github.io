@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f1eb" />
+    <meta
+      name="description"
+      content="Aeneas 的 Personal Lab / Digital Garden：实验、兔子洞，以及那些本来没必要做但还是做了的东西。"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <title>Aeneas — Personal Lab / Digital Garden</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="lab-site" data-page="home">
+    <header class="lab-header" data-header>
+      <a class="lab-brand" href="#top" aria-label="返回 Aeneas 首页">
+        <span class="lab-brand-mark">AENEAS</span>
+        <span class="lab-brand-subtitle">personal lab / digital garden</span>
+      </a>
+
+      <nav class="lab-nav" aria-label="主导航">
+        <a href="#now" data-nav-link="now">Now</a>
+        <a href="#lab" data-nav-link="lab">Lab</a>
+        <a href="#garden" data-nav-link="garden">Garden</a>
+        <a href="#side-quests" data-nav-link="side-quests">Side Quests</a>
+        <a href="#about" data-nav-link="about">About</a>
+      </nav>
+
+      <a class="lab-header-github" href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main id="top">
+      <section class="v2-hero v2-section" aria-labelledby="hero-title">
+        <div class="v2-hero-copy">
+          <p class="v2-eyebrow"><span class="v2-status-dot"></span> AENEAS / PERSONAL SPACE</p>
+          <h1 id="hero-title">Aeneas</h1>
+          <p class="v2-hero-type">Personal Lab / Digital Garden</p>
+          <p class="v2-hero-lead">
+            Experiments, rabbit holes,<br />
+            and things I build for fun.
+          </p>
+          <p class="v2-hero-cn">
+            一些实验、兔子洞，<br />
+            以及那些本来没必要做但我还是做了的东西。
+          </p>
+          <div class="v2-actions" aria-label="进入网站内容">
+            <a class="v2-button v2-button-primary" href="#now">
+              See what I’m doing now <span aria-hidden="true">↓</span>
+            </a>
+            <a class="v2-button v2-button-secondary" href="#garden">
+              Open the garden <span aria-hidden="true">↘</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="v2-hero-signal" aria-label="这个空间保存的内容">
+          <div class="v2-signal-head">
+            <span>currently open</span>
+            <span>01—04</span>
+          </div>
+          <div class="v2-signal-list">
+            <div class="v2-signal-row"><span>01</span><strong>things I’m trying</strong></div>
+            <div class="v2-signal-row"><span>02</span><strong>questions that got bigger</strong></div>
+            <div class="v2-signal-row"><span>03</span><strong>small upstream fixes</strong></div>
+            <div class="v2-signal-row"><span>04</span><strong>unfinished threads</strong></div>
+          </div>
+          <p class="v2-signal-note">No grand plan. Just a place to keep the trail.</p>
+        </div>
+      </section>
+
+      <section class="v2-section v2-section-now" id="now" aria-labelledby="now-title">
+        <div class="v2-section-head v2-section-head-quiet">
+          <div>
+            <p class="v2-eyebrow">NOW / SEPTEMBER 2026</p>
+            <h2 id="now-title">最近正在想什么。</h2>
+          </div>
+          <p class="v2-section-intro">这里会变。它不是 changelog，只是我最近还没有放下的几件事。</p>
+        </div>
+        <div class="v2-now-list" data-now-list></div>
+      </section>
+
+      <section class="v2-section v2-section-lab" id="lab" aria-labelledby="lab-title">
+        <div class="v2-section-head v2-section-head-strong">
+          <div>
+            <p class="v2-eyebrow">LAB / THINGS I BUILT TO FIND OUT</p>
+            <h2 id="lab-title">认真折腾过的实验。</h2>
+          </div>
+          <a class="v2-section-link" href="lab/">Open Lab index <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="v2-lab-preview" data-lab-preview></div>
+      </section>
+
+      <section class="v2-section v2-section-garden" id="garden" aria-labelledby="garden-title">
+        <div class="v2-section-head v2-section-head-quiet">
+          <div>
+            <p class="v2-eyebrow">GARDEN / NOTES &amp; RABBIT HOLES</p>
+            <h2 id="garden-title">还在长出来的东西。</h2>
+          </div>
+          <a class="v2-section-link" href="garden/">Open the garden <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="v2-garden-list" data-garden-list></div>
+      </section>
+
+      <section class="v2-section v2-section-sidequests" id="side-quests" aria-labelledby="side-quests-title">
+        <div class="v2-section-head v2-section-head-light">
+          <div>
+            <p class="v2-eyebrow">SIDE QUESTS / UPSTREAM</p>
+            <h2 id="side-quests-title">顺手追进去的小问题。</h2>
+          </div>
+          <p class="v2-section-intro">有些问题本来可以忽略，后来却一路走到了测试和 upstream。</p>
+        </div>
+        <div class="v2-sidequest-list" data-sidequest-list></div>
+      </section>
+
+      <section class="v2-section v2-section-about" id="about" aria-labelledby="about-title">
+        <div class="v2-section-head v2-section-head-quiet">
+          <div>
+            <p class="v2-eyebrow">ABOUT / WHY AENEAS</p>
+            <h2 id="about-title">一个用来保存过程的地方。</h2>
+          </div>
+        </div>
+        <div class="v2-about-grid">
+          <p class="v2-about-manifesto">我喜欢折腾一些自己感兴趣、甚至不一定有用的东西。</p>
+          <div class="v2-about-copy">
+            <p>
+              Aeneas 是我在网上使用的名字。很多时候我开始做一件事，只是因为想知道：这个到底能不能做到？从不会到能跑起来的过程，通常是最让我开心的部分。
+            </p>
+            <a class="v2-text-link" href="#about">Why Aeneas? <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="v2-footer" id="elsewhere">
+      <div>
+        <p class="v2-eyebrow">ELSEWHERE</p>
+        <p class="v2-footer-note">The rest of the trail lives elsewhere.</p>
+      </div>
+      <div class="v2-footer-links">
+        <a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">
+          <span>GitHub</span><span>hxy-asdw ↗</span>
+        </a>
+        <a href="mailto:2870854049@qq.com">
+          <span>Email</span><span>2870854049@qq.com ↗</span>
+        </a>
+      </div>
+      <a class="v2-back-top" href="#top">Back to top ↑</a>
+    </footer>
+
+    <script src="content.js"></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>
