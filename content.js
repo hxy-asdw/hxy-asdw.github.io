@@ -30,7 +30,7 @@ window.siteContent = {
       status: "experiment",
       featured: true,
       repo: "https://github.com/hxy-asdw/doupo-analysis",
-      summary: "我本来只是想知道这个小游戏到底有多难成帝。后来我有了一个离线实验室、固定 seed、批量模拟和比最开始更多的问题。",
+      summary: "我本来只是想把一个网页小游戏拆开看看，搞清楚它到底怎么运行。后来一路做到了离线调试、批量模拟和可复现的随机人生。",
       question: "一个看不见全貌的运行时行为，能不能在本地被重复观察？",
       whatBuilt: "一个不连接真实服务的离线分析环境，用 seed、instrumentation 和 batch simulation 把一次观察变成可以比较的过程。",
       whatHappened: "边界越清楚，能问的问题反而越多；有些直觉只有在批量运行后才站得住。",
