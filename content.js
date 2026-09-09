@@ -92,6 +92,24 @@ window.siteContent = {
   ],
   sideQuests: [
     {
+      title: "chat-style-distillation",
+      subtitle: "From a private chat archive to a small style experiment.",
+      state: "ongoing · local-first · privacy-sensitive",
+      summary: "原以为只是导出聊天记录，后来遇到了备份结构、工具兼容、导出器失败、API 鉴权、消息倒序和数据清洗。最后换走本地 API，得到结构化数据，并留下第一版清洗结果、对话轮次和风格规则包。能导出、能分析、能生成可信的模拟回复，其实是三件不同的事。",
+    },
+    {
+      title: "codex-reconnect-debug",
+      subtitle: "Why did Codex keep reconnecting?",
+      state: "debugging · networking · Codex",
+      summary: "一次烦人的连接问题，让我一路检查代理设置、环境变量、Cloudflare 响应和 CLI 行为。比“修好它”更有意思的是，看清一个看起来相同的故障，可能来自完全不同的层。",
+    },
+    {
+      title: "github-pages-learning",
+      subtitle: "I learned Git by actually needing it.",
+      state: "Git · GitHub Pages · learning by shipping",
+      summary: "从 clone、.git、remote 到 commit、push 和 GitHub Pages，我不是先学完 Git 再做网站，而是在真正上线的过程中一点点搞懂它。中间还因为 hxy / hyx 和本地路径写错，给自己添过好几次麻烦。",
+    },
+    {
       title: "Recharts",
       state: "Merged",
       summary: "一个本来可以忽略的 Tooltip 边界问题，最后被我一路追到了测试和 upstream。",

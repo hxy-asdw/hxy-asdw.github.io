@@ -107,11 +107,11 @@ function renderSideQuests() {
   const target = document.querySelector("[data-sidequest-list]");
   if (!target) return;
   target.innerHTML = content.sideQuests.map((item, index) => `
-    <a class="v2-sidequest-item" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">
+    ${item.link ? `<a class="v2-sidequest-item" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">` : '<article class="v2-sidequest-item v2-sidequest-note">'}
       <div class="v2-sidequest-title"><span>SIDE QUEST #${String(index + 1).padStart(3, "0")}</span><strong>${escapeHtml(item.title)}</strong></div>
-      <p>${escapeHtml(item.summary)}</p>
-      <span class="v2-merged">${escapeHtml(item.state)} ↗</span>
-    </a>
+      <div>${item.subtitle ? `<p class="v2-sidequest-subtitle" lang="en">${escapeHtml(item.subtitle)}</p>` : ''}<p>${escapeHtml(item.summary)}</p></div>
+      <span class="v2-merged">${escapeHtml(item.state)}${item.link ? ' ↗' : ''}</span>
+    ${item.link ? '</a>' : '</article>'}
   `).join("");
 }
 

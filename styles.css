@@ -2084,6 +2084,17 @@ h1 {
   text-align: right;
 }
 
+.v2-sidequest-note { grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr); align-items: start; }
+.v2-sidequest-note > * { min-width: 0; overflow-wrap: anywhere; }
+.v2-sidequest-note .v2-merged { grid-column: 2; grid-row: auto; text-align: left; }
+.v2-sidequest-item .v2-sidequest-subtitle { margin-bottom: 12px; color: var(--ink); }
+.v2-sidequest-note:hover { background: transparent; }
+.v2-sidequest-note:active { transform: none; }
+@media (max-width: 680px) {
+  .v2-sidequest-item.v2-sidequest-note { grid-template-columns: minmax(0, 1fr); }
+  .v2-sidequest-note .v2-merged { grid-column: 1; }
+}
+
 .v2-about-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.8fr);
