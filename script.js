@@ -74,6 +74,7 @@ function renderLab() {
         <p class="v2-lab-lead">${escapeHtml(featured.summary)}</p>
         ${labDetails(featured)}
         ${link(featured.repo, "Open repository")}
+        ${featured.caseStudy ? `<p>${link(featured.caseStudy, "Read the exploration")}</p>` : ""}
       </div>
     </article>
     <article class="v2-lab-secondary" id="${escapeHtml(secondary.id)}">

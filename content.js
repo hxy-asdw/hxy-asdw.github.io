@@ -24,6 +24,7 @@ window.siteContent = {
   labs: [
     {
       id: "doupo-analysis",
+      caseStudy: "lab/doupo-analysis/",
       title: "doupo-analysis",
       eyebrow: "RUNTIME RABBIT HOLE",
       status: "experiment",

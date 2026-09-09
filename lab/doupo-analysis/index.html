@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f1eb" />
+    <meta name="description" content="一次从好奇出发的网页小游戏逆向与源码阅读实验，后来走向批量模拟和随机性。" />
+    <title>doupo-analysis — Aeneas Lab</title>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="case-study.css" />
+  </head>
+  <body class="lab-site case-study" data-page="case-study">
+    <header class="lab-header" data-header>
+      <a class="lab-brand" href="../../" aria-label="返回 Aeneas 首页"><span class="lab-brand-mark">AENEAS</span><span class="lab-brand-subtitle">personal lab / digital garden</span></a>
+      <nav class="lab-nav" aria-label="主导航">
+        <a href="../../#now">Now</a><a class="is-active" href="../../#lab">Lab</a><a href="../../#garden">Garden</a><a href="../../#side-quests">Side Quests</a><a href="../../#about">About</a>
+      </nav>
+      <a class="lab-header-github" href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="case-main">
+      <article>
+        <header class="case-intro">
+          <p class="v2-eyebrow">00 / INTRO · LAB</p>
+          <h1>doupo-analysis</h1>
+          <p class="case-deck" lang="en">A tiny reverse-engineering experiment that got slightly out of hand.</p>
+          <p>一开始只是想看看，能不能把一个网页小游戏拆开，读懂它是怎么运行的。</p>
+          <a class="v2-text-link" href="https://github.com/hxy-asdw/doupo-analysis" target="_blank" rel="noreferrer">Open repository ↗</a>
+        </header>
+        <section class="case-section" aria-labelledby="why">
+          <p class="v2-eyebrow">01 / WHY I OPENED IT UP</p>
+          <div><h2 id="why">只是想拆开看看。</h2>
+            <p>看到那个斗破题材的网页小游戏时，我没有什么明确的产品目标。只是觉得，这种东西拿来做一次逆向和源码阅读实验，会不会很有意思？</p>
+            <p>我想让 Codex 帮忙找到真正运行的页面、代码和资源，把能分析的部分整理到本地，再试着自己看懂它。</p>
+            <blockquote>如果让 Codex 帮我把它拆下来，我最终能不能真正看懂这个游戏是怎么运行的？</blockquote>
+          </div>
+        </section>
+        <section class="case-section" aria-labelledby="apart">
+          <p class="v2-eyebrow">02 / GETTING THE GAME APART</p>
+          <div><h2 id="apart">从一个网页，往里找。</h2>
+            <p>入口只是一个网页。我想找到的是它背后真正执行游戏的那一层：哪些代码负责运行，哪些数据决定事件，又该从哪里开始读。</p>
+            <ol class="case-flow" aria-label="探索路径，非已核实的源码依赖图"><li>找到实际游戏页面</li><li>定位 JavaScript、数据与资源</li><li>整理到本地，阅读游戏逻辑</li></ol>
+            <dl class="case-facts"><div><dt>data.js</dt><dd>血脉与境界名称、突破参数、寿元奖励和源气数据。</dd></div><div><dt>events.js</dt><dd>事件的年龄范围、权重、次数、条件与成功／失败处理。</dd></div><div><dt>sim.js</dt><dd>创建角色、推进年份、突破、事件抽取与成帝判定。</dd></div><div><dt>game.js</dt><dd>连接开始按钮、定时推进、日志队列和属性显示的页面层。</dd></div></dl>
+            <p class="case-source">本地四份文件与已保存的 online 快照逐一 SHA-256 核对一致；这是历史快照对照，不代表当前线上版本。离线实验只加载前三份逻辑源码，不执行 game.js 或 SDK。来源：online/comparison.json、runtime-lab-sources.json、四份源码。</p>
+          </div>
+          <figure class="case-figure case-figure-primary"><img src="../../assets/lab/doupo-analysis/runtime-lab.png" alt="本地隔离 runtime lab 展示等级、境界、斗气、年龄寿元和一次运行后的事件日志" loading="lazy" width="1578" height="1046"><figcaption>本地隔离 runtime lab：把游戏逻辑从正式页面中抽出来，观察一次状态变化。</figcaption></figure>
+        </section>
+        <section class="case-section" aria-labelledby="works">
+          <p class="v2-eyebrow">03 / UNDERSTANDING HOW IT ACTUALLY WORKS</p>
+          <div><h2 id="works">代码背后，是怎样的一局游戏？</h2>
+            <p>最开始真正想得到的，是一份能看懂的游戏规则：人物属性如何变化，修炼、突破、事件和寿命如何把一局游戏带向结束。</p>
+            <p>这些问题只能沿着状态变化去读。一个条件判断解释了一步，还要继续追它影响了什么。</p>
+            <ol class="case-flow" aria-label="原始引擎的主流程"><li><strong>创建角色。</strong>createGame 抽血脉，初始化斗气和寿元；从 6 岁、境界 1 开始。</li><li><strong>推进一年。</strong>rollYear 先增加 year 与 age，再检查古帝传承、系统、炎帝和源气等特殊路径。</li><li><strong>结算修炼。</strong>先计算普通突破层数，再逐层发放境界、斗气和寿元收益，随后检查“水到渠成”。</li><li><strong>检查成帝与寿终。</strong>境界至少 100、尚未成帝且剩余寿元不超过 10 年时尝试成帝；随后检查年龄是否超过寿元。</li><li><strong>抽取事件，再检查寿元。</strong>事件可能改变属性、寿元或死亡状态，返回日志与更新后的本局状态。</li></ol>
+            <p>这不是每年都会走完的直线：古帝、成帝尝试和寿终可以提前返回；页面有日志时也不会推进新的一年。所以，一条日志不等于一年。</p>
+            <p class="case-source">来源：sim.js createGame / rollYear；game.js startGame / playTick / tick；runtime-analysis.md。</p>
+          </div>
+        </section>
+        <section class="case-section" aria-labelledby="rules">
+          <p class="v2-eyebrow">04 / WRITING DOWN THE RULES</p>
+          <div><h2 id="rules">把散落的规则，重新拼起来。</h2>
+            <p>源码不会直接告诉我“游戏规则是什么”。条件、数据、事件和状态变化分散在不同地方，需要重新连起来，才能写成给人看的说明。</p>
+            <p>我把它们写成解释，而不是代码直译。下面的规则限定于这份保存的源码；路径存在，不等于测出了自然发生概率。</p>
+            <ul class="case-questions"><li><strong>斗气不是普通突破的经验槽。</strong>attemptBreak 不检查或消耗 cult；突破成功后，levelUp 才增加斗气与寿元。</li><li><strong>100 和 101 之间不是再升一级。</strong>普通升级上限是 100。进入 101 有古帝传承、源气达标、强冲帝位三条路径。</li><li><strong>抽到事件，不等于满足条件。</strong>先按年龄与剩余次数构造池，再按权重抽取；抽中就扣次数，之后才判断 cond。</li><li><strong>注释也需要验证。</strong>源气门槛的实现是 230,000–240,000；小层突破也可能获得区间随机奖励的 1%（四舍五入）寿元，不能只照抄旧注释。</li></ul>
+            <p>为了看清这些变化，我又做了单步调试：在独立状态上调用一次 rollYear，记录前后状态、赋值和日志。runtime-checks.json 留下了 8 项检查，禁止接口访问均为 0；UI 检查使用 DOM 替身。</p>
+            <p class="case-source">来源：sim.js attemptBreak / lifespanGain / levelUp / rollEvent / tryFeisheng；data.js XINWU；events.js；runtime-analysis.md、runtime-checks.json、runtime-lab-ui.js。runtime-lab.html 是独立入口；runtime-lab-install.js 是历史安装器，后续 BATCH-README 已明确不再使用它。</p>
+          </div>
+        </section>
+        <section class="case-section case-turn" aria-labelledby="questions">
+          <p class="v2-eyebrow">05 / THEN THE QUESTIONS GOT BIGGER</p>
+          <div><h2 id="questions" lang="en">Then the questions got bigger.</h2>
+            <p>规则逐渐看懂之后，最开始的目标反而不够用了。</p>
+            <ul class="case-questions"><li>正常玩，到底有多难达到最高境界？</li><li>那些特殊路径，是怎么触发的？</li><li>如果把游戏跑很多次，会看到什么？</li><li>一局随机的人生，能不能完整重现？</li></ul>
+            <p>“读懂它”慢慢变成了“试试看”。后来的工具，是这些问题一点点带出来的。</p>
+            <div class="case-exploration-flow" aria-label="探索流程"><div><span>01</span><strong>Web game</strong></div><i aria-hidden="true"></i><div><span>02</span><strong>Locate runtime</strong></div><i aria-hidden="true"></i><div><span>03</span><strong>Read source</strong></div><i aria-hidden="true"></i><div><span>04</span><strong>Reconstruct rules</strong></div><i aria-hidden="true"></i><div><span>05</span><strong>Build runtime lab</strong></div><i aria-hidden="true"></i><div><span>06</span><strong>Batch simulation</strong></div><i aria-hidden="true"></i><div><span>07</span><strong>Replay randomness</strong></div></div>
+          </div>
+        </section>
+        <section class="case-section" aria-labelledby="simulation">
+          <p class="v2-eyebrow">06 / SIMULATING THE GAME</p>
+          <div><h2 id="simulation">总不能一直手动玩下去。</h2>
+            <p>想知道一种结果有多常见，只靠反复玩很难回答。于是实验继续往前走：固定条件，批量运行，把结果留下来比较。</p>
+            <p>批量工具把每局初态深复制，在独立引擎里执行；主测试局与事件内部临时模拟分开统计，注入测试不混进自然样本。</p>
+            <div class="case-result-lead"><p class="case-result-number">10,000</p><p class="case-result-label">simulated runs</p></div>
+            <div class="case-result-grid"><div><strong>4,328</strong><span>reached level 100<br><em>43.28%</em></span></div><div><strong>130</strong><span>became Dou Di<br><em>1.30%</em></span></div><div><strong>110</strong><span>xianyuan ascension</span></div><div><strong>20</strong><span>feisheng ascension</span></div><div><strong>0 observed</strong><span>xiandi ascension</span></div><div><strong>404.276s</strong><span>about 6m 44s runtime</span></div></div>
+            <p class="case-method-note">这是 <strong>fixed aptitude 10 / fixed initial state</strong> 条件下的模拟结果，不是所有随机开局的总体成帝概率。xiandi 的结果只能写作 <strong>0 observed</strong>，不代表 0% probability。</p>
+            <p class="case-source">来源：validation-10000-20260909/simulation-summary.json、run-metadata.json、simulation-report.md。10000 局全部完成，截断 0 局；三条成帝路径之和等于 130。</p>
+          </div>
+        </section>
+        <section class="case-section" aria-labelledby="randomness">
+          <p class="v2-eyebrow">07 / REPLAYING RANDOMNESS</p>
+          <div><h2 id="randomness">同一局人生，还能再来一次吗？</h2>
+            <p>批量运行之后，我开始在意另一件事：看到一局有意思的过程，能不能把它找回来？</p>
+            <p>问题延伸到 Seed、RNG 重放和可复现人生。固定随机性，是给观察和调试留下一个可以返回的起点。</p>
+            <div class="case-seed-hero" aria-label="Seed 93 重放关键指标"><div><span>SEED</span><strong>93</strong></div><div><strong>3,395</strong><span>simulated years</span></div><div><strong>6 → 3,401</strong><span>initial age → final age<br><em>3401 = 6 + 3395</em></span></div><div><strong>20,291</strong><span>53-bit random values</span></div></div>
+            <dl class="case-facts"><div><dt>Seed 93</dt><dd>从 1 开始顺序搜索得到的首个成功候选，走源气成帝路径；这是“找到成功即停止”的选择样本。</dd></div><div><dt>3,395 年 → 3,401 岁</dt><dd>3,395 是主局调用 rollYear 的次数；年龄从 6 岁开始，因此终局为 6 + 3,395 = 3,401 岁。415 条原始日志不是年度推进次数。</dd></div><div><dt>20,291 次随机取值</dt><dd>这是单局从固定初态到成帝取得的 53 位随机数数量，包含事件内部临时模拟；不是底层 32 位 RNG 输出次数。</dd></div></dl>
+            <p>重放器使用 xoshiro128**、splitmix32 初始化和 53 位随机数适配。每次重建初态与 RNG，重新执行原始 rollYear；事件里的临时模拟也会消耗随机数。</p>
+            <h3>但输入同一个 Seed，并不一定是同一局。</h3>
+            <p>把 Seed 93 放进普通开局后，人生却对不上：普通 createGame 先用了 3 个 draw 抽血脉、斗气与寿元；基准直接从 draw 0 推进年份。修正的是开局协议，不是随机算法。</p>
+            <p>加载完整基准初态、重建引擎和 PRNG 后，验证再次得到境界 101、源气成帝、斗气 2,207,677 和寿元 999,999；20,291 个 draw 与完整终态对照通过。可复现意味着源码版本、初态、算法和消费顺序都一致。</p>
+            <figure class="case-figure"><img src="../../assets/lab/doupo-analysis/seed93-replay.png" alt="Seed 93 随机人生重放页面，显示 3395 年、3401 岁、源气成帝和重放验证状态" loading="lazy" width="1500" height="1000"><figcaption>Seed 93 的可复现随机人生重放：同一初态、同一消费顺序，回到同一终局。</figcaption></figure>
+            <section class="case-methodology" aria-labelledby="methodology"><p class="v2-eyebrow">REPRODUCIBILITY</p><h3 id="methodology">A small set of fixed agreements.</h3><dl class="case-method-grid"><div><dt>Batch seed</dt><dd>20260909</dd></div><div><dt>Runs</dt><dd>10000</dd></div><div><dt>RNG</dt><dd>xoshiro128**<br>53-bit uniform adapter<br>splitmix32 run seeding</dd></div><div><dt>Initial</dt><dd>lvl 1 · age 6<br>innate 10 · aptitude 10</dd></div><div><dt>Termination</dt><dd>dead || ascended</dd></div><div><dt>Truncation</dt><dd>none</dd></div><div class="case-method-wide"><dt>Per run</dt><dd>deep copy initial state<br>seed + runIndex independent RNG stream</dd></div></dl></section>
+            <p class="case-source">来源：seed-search-results.json、replay-verification.json、doupo-emperor-replay.html、README-EMPEROR-REPLAY.md、SEED93-REPRODUCTION.md、seed93-rng-first100.json、seed93-clone-verification.json。单步调试面板使用的是另一套 LCG 随机源，不能与这里的重放器混为一谈；也不是官方浏览器原始随机流的回放。</p>
+          </div>
+        </section>
+        <section class="case-section" aria-labelledby="learned">
+          <p class="v2-eyebrow">08 / WHAT I LEARNED</p>
+          <div><h2 id="learned">比最开始，多了很多问题。</h2>
+            <p>原本以为自己只是在拆一个网页小游戏。沿着“它为什么这样运行”继续追下去，后来遇到了状态变化、随机逻辑、模拟、工具构建，还有怎么验证自己的理解。</p>
+            <p>这次比较清楚地感受到，很多东西并不是从“我要学习某个技术”开始的，而是从“这个东西到底是怎么回事”开始的。</p>
+            <p class="case-source">记录说明 · 起因来自我的项目回顾，机制与数字来自本地源码、保存的配置和验证报告。本页只整理证据，不发布原始源码或大型日志。本次重新核对了快照哈希与保存的 RNG 序列，没有重新执行模拟；原工具报告中的 DOM 替身测试也不等于真实浏览器视觉或 CSP 实测。</p>
+          </div>
+        </section>
+        <footer class="case-end"><p class="v2-eyebrow">09 / BACK TO LAB</p><a class="v2-text-link" href="../../#lab">Back to Lab <span aria-hidden="true">↗</span></a></footer>
+      </article>
+    </main>
+    <footer class="v2-footer">
+      <div><p class="v2-eyebrow">ELSEWHERE</p><p class="v2-footer-note">Back to the main thread.</p></div>
+      <div class="v2-footer-links"><a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer"><span>GitHub</span><span>hxy-asdw ↗</span></a><a href="mailto:2870854049@qq.com"><span>Email</span><span>2870854049@qq.com ↗</span></a></div>
+      <a class="v2-back-top" href="../../">Home ↑</a>
+    </footer>
+    <script src="../../script.js" defer></script>
+  </body>
+</html>
