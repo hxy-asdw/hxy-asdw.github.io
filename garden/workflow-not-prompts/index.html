@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f1eb" />
+    <meta name="description" content="从想到什么就让 Codex 改，到把长期工作拆成能检查、能回退的小任务。Aeneas 的个人网站开发笔记。" />
+    <title>最重要的不是 Prompt — Aeneas Garden</title>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../note.css" />
+  </head>
+  <body class="lab-site" data-page="garden-note">
+    <header class="lab-header" data-header>
+      <a class="lab-brand" href="../../" aria-label="返回 Aeneas 首页"><span class="lab-brand-mark">AENEAS</span><span class="lab-brand-subtitle">personal lab / digital garden</span></a>
+      <nav class="lab-nav" aria-label="主导航">
+        <a href="../../#now">Now</a><a href="../../lab/">Lab</a><a class="is-active" href="../">Garden</a><a href="../../#side-quests">Side Quests</a><a href="../../#about">About</a>
+      </nav>
+      <a class="lab-header-github" href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="garden-note">
+      <article aria-labelledby="note-title">
+        <header>
+          <p class="v2-eyebrow">GARDEN / LEARNING NOTE · <time datetime="2026-09-09">2026-09-09</time> · GROWING</p>
+          <h1 id="note-title">第一次认真用 Codex 做一个长期项目，我发现最重要的不是 Prompt。</h1>
+          <p>最近一直在用 Codex 做这个个人网站。页面慢慢有了样子，我也开始发现，自己需要学习的不只是怎么把要求说清楚。</p>
+        </header>
+        <section aria-labelledby="prompting">
+          <h2 id="prompting"><span>01 / </span>一开始，我只是在不停 Prompt</h2>
+          <p>想到什么，发一个 prompt，让它改，看结果。看完又有新想法，再继续改。</p>
+          <p>刚开始这样很自然。改一段文案，调一块布局，很快就能看到变化。我也容易把注意力放在下一句话怎么写，才能让它更接近我脑子里的样子。</p>
+        </section>
+        <section aria-labelledby="longer-project">
+          <h2 id="longer-project"><span>02 / </span>项目变长以后，问题开始出现</h2>
+          <p>这个网站的方向变过。从求职作品集，到 Personal Lab 和 Digital Garden，我想留下的东西也跟着变了。如果目标还没想清楚，局部改得再认真，也可能是在往旧方向走。</p>
+          <p>还有一次 mobile polish，出现了横向溢出和标题裁切。原本只是想把手机上看起来不够好的地方修一下，最后却要先恢复稳定版本。那之后，“再优化一点”对我就不再是一个足够明确的任务了。</p>
+        </section>
+        <section aria-labelledby="small-tasks">
+          <h2 id="small-tasks"><span>03 / </span>我开始把工作拆成 Task</h2>
+          <p>现在我会先说清楚这轮要得到什么，再限定改动范围。比如先只处理 Currently Open，确认以后冻结；下一轮才处理 Now。两块内容很近，但表达的事情不同，没必要一起反复改。</p>
+          <p>大一点的修改，我会先让 Agent 检查现有实现、说明计划，再开始动手。“哪些不要改”也成了任务的一部分。它不是多余的限制，而是在保留已经做出的决定。</p>
+        </section>
+        <section aria-labelledby="verification">
+          <h2 id="verification"><span>04 / </span>“完成”之前先验证</h2>
+          <p>我开始把检查写进任务，而不是等页面出问题再补。Desktop 和移动端都要看，文字有没有被截断，页面会不会横向滚动，链接能不能到正确的位置。Agent 说改完了，和我确认这一轮可以留下，是两件事。</p>
+          <p>整理 doupo-analysis Case Study 时，这一点也用在了内容上。数字要能找到来源，冲突要记进 SOURCES，没核实的结论就先留着。这里的“完成”，不是把所有空白都填满。</p>
+        </section>
+        <section aria-labelledby="git">
+          <h2 id="git"><span>05 / </span>Git 变成了 Agent 的存档点</h2>
+          <p>现在我通常会明确写上：不要自动 commit，不要 push。先看改动、检查结果，验收后再把一个完整任务整理成独立 commit。</p>
+          <p>经历过恢复稳定版本以后，我更在意能不能找到一个明确的返回点。不是为了让提交记录好看，而是下次改坏了，不用靠回忆猜哪些东西曾经正常。</p>
+        </section>
+        <section aria-labelledby="workflow">
+          <h2 id="workflow"><span>06 / </span>我现在更在意 Workflow，而不是 Prompt</h2>
+          <p>切换 Agent 或准备下次继续之前，我也开始留项目状态：哪些已经完成，哪些暂时冻结，哪些还没验证，下一步只做什么。我不想每次重新打开项目，都靠翻很长的对话找回进度。</p>
+          <p>我还在学习这套做法，也不觉得自己已经找到标准答案。只是越来越觉得，关键不是某条 prompt 写得多漂亮，而是能不能把一个模糊目标拆成 Agent 可以持续完成、我可以检查、必要时可以回退的小任务。</p>
+          <p>下一轮要改什么，我还是会写进 prompt。只是现在，我会先确认上一轮停在了哪里。</p>
+        </section>
+        <footer class="garden-note-end"><a class="v2-text-link" href="../">Back to Garden <span aria-hidden="true">↗</span></a></footer>
+      </article>
+    </main>
+    <footer class="v2-footer">
+      <div><p class="v2-eyebrow">ELSEWHERE</p><p class="v2-footer-note">Back to the main thread.</p></div>
+      <div class="v2-footer-links"><a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer"><span>GitHub</span><span>hxy-asdw ↗</span></a><a href="mailto:2870854049@qq.com"><span>Email</span><span>2870854049@qq.com ↗</span></a></div>
+      <a class="v2-back-top" href="../../">Home ↑</a>
+    </footer>
+    <script src="../../script.js" defer></script>
+  </body>
+</html>

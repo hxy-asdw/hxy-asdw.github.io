@@ -1,0 +1,11 @@
+/* Reading styles loaded only by Garden notes. */
+.garden-note { width: min(42rem, calc(100% - 40px)); margin-inline: auto; padding-block: clamp(8rem, 12vw, 12rem) 5rem; }
+.garden-note h1 { margin: 1.5rem 0 2rem; font-size: clamp(1.9rem, 3.6vw, 3rem); font-weight: 570; line-height: 1.4; letter-spacing: -0.025em; overflow-wrap: anywhere; }
+.garden-note p { margin: 0 0 1.25rem; font-size: 1rem; line-height: 1.95; letter-spacing: 0; overflow-wrap: anywhere; }
+.garden-note .v2-eyebrow { display: block; font-size: 0.7rem; line-height: 1.6; letter-spacing: 0.12em; }
+.garden-note time { white-space: nowrap; }
+.garden-note section { margin-top: 3.5rem; }
+.garden-note h2 { margin: 0 0 1.25rem; font-size: clamp(1.25rem, 2.3vw, 1.55rem); font-weight: 560; line-height: 1.5; letter-spacing: -0.015em; }
+.garden-note h2 span { color: var(--accent-deep); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; }
+.garden-note-end { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.garden-note .v2-text-link { min-height: 44px; }

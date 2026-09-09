@@ -1663,6 +1663,13 @@ h1 {
   letter-spacing: -0.025em;
 }
 
+.v2-signal-description {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.77rem;
+  line-height: 1.55;
+}
+
 .v2-signal-note {
   margin: 25px 0 0;
   color: var(--muted);

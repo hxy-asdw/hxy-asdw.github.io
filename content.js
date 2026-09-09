@@ -2,23 +2,23 @@ window.siteContent = {
   now: [
     {
       status: "building",
-      text: "正在把这个网站做成一个愿意长期维护的角落。",
-      href: "#about",
+      text: "继续完善个人网站，把真实项目、实验和过程整理进去。",
+      href: "#lab",
+    },
+    {
+      status: "learning",
+      text: "更系统地使用 Codex、Agent 和 Git 工作流，而不只是一轮轮 prompting。",
+      href: "#garden",
+    },
+    {
+      status: "exploring",
+      text: "研究个人 AI 工具、自动化，还有一些因为好奇而开始的小实验。",
+      href: "#lab",
     },
     {
       status: "thinking",
-      text: "继续观察 Agent 生成的数据分析，怎样才能更容易被检查。",
-      href: "#excel-data-report",
-    },
-    {
-      status: "reading",
-      text: "回头整理 doupo-analysis，把它当作一次 runtime rabbit hole。",
-      href: "#doupo-analysis",
-    },
-    {
-      status: "building",
-      text: "记录一些 Codex、debugging 和 build 过程。",
-      href: "#garden",
+      text: "认真想清楚，什么样的工作和长期方向更适合自己。",
+      href: "#about",
     },
   ],
   labs: [
@@ -64,6 +64,15 @@ window.siteContent = {
     },
   ],
   garden: [
+    {
+      id: "workflow-not-prompts",
+      href: "garden/workflow-not-prompts/",
+      date: "2026-09-09",
+      status: "growing",
+      title: "第一次认真用 Codex 做一个长期项目，我发现最重要的不是 Prompt。",
+      summary: "从想到什么就让它改，到把工作拆成能检查、能回退的小任务。一次个人网站开发中的学习笔记。",
+      body: "我还在学习怎样和 Agent 一起维护一个项目。这篇记下的是目前开始有用的一些习惯。",
+    },
     {
       id: "olist-rabbit-hole",
       date: "2026",

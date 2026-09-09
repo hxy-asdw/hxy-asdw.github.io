@@ -95,7 +95,7 @@ function renderGarden() {
   const target = document.querySelector("[data-garden-list]");
   if (!target) return;
   target.innerHTML = content.garden.slice(0, 2).map((item, index) => `
-    <a class="v2-garden-item" href="garden/#${escapeHtml(item.id)}">
+    <a class="v2-garden-item" href="${escapeHtml(item.href || `garden/#${item.id}`)}">
       <div class="v2-garden-meta"><span>${String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(item.date)}</span><span class="v2-status-label status-${escapeHtml(item.status)}">${escapeHtml(item.status)}</span></div>
       <div class="v2-garden-main"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.summary)}</p></div>
       <span class="v2-row-arrow" aria-hidden="true">↗</span>
@@ -137,6 +137,7 @@ function renderIndexPage() {
         <h2>${escapeHtml(item.title)}</h2>
         <p class="v2-lab-lead">${escapeHtml(item.summary)}</p>
         <p class="v2-index-body">${escapeHtml(item.body)}</p>
+        ${item.href ? link(`../${item.href}`, "Read note") : ""}
       </article>
     `).join("");
   }
