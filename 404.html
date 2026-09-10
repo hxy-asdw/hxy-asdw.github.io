@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f1eb" />
+    <meta name="robots" content="noindex" />
+    <title>The trail went cold — Aeneas</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="404">
+    <header class="not-found-header">
+      <a class="not-found-brand" href="/" aria-label="Aeneas，返回首页"><strong>AENEAS</strong><span lang="en">personal lab / digital garden</span></a>
+    </header>
+    <main class="not-found-main">
+      <div class="not-found-copy">
+        <p class="not-found-eyebrow" lang="en">404 / THE TRAIL WENT COLD</p>
+        <div class="not-found-marker" aria-hidden="true"><span class="not-found-number">404</span></div>
+        <h1 lang="en">The trail went cold.</h1>
+        <div class="not-found-prose">
+          <p>你来到了一条不存在的路径。</p>
+          <p>可能是链接旧了，也可能是我又改了什么。</p>
+          <p>不过既然都走到这里了，要不要顺便看看别的东西？</p>
+        </div>
+        <nav class="not-found-actions" aria-label="选择下一条路径" lang="en">
+          <a class="not-found-primary" href="/">Return to the trail <span aria-hidden="true">↗</span></a>
+          <a href="/lab/">Open the Lab <span aria-hidden="true">↗</span></a>
+          <button type="button" id="another-trail" hidden>Try another rabbit hole <span aria-hidden="true">↗</span></button>
+        </nav>
+      </div>
+      <aside class="not-found-meta" aria-label="路径信息">
+        <dl>
+          <div><dt lang="en">requested path</dt><dd><code id="requested-path">路径未读取（需要 JavaScript）</code></dd></div>
+          <div><dt lang="en">status</dt><dd lang="en">404 / unresolved</dd></div>
+          <div><dt lang="en">next move</dt><dd><a href="/garden/" lang="en">follow another trail <span aria-hidden="true">→</span></a></dd></div>
+        </dl>
+      </aside>
+    </main>
+    <footer class="not-found-footer" lang="en">Aeneas / somewhere off the trail.</footer>
+    <script>
+      (() => {
+        document.getElementById("requested-path").textContent = window.location.pathname;
+        const trails = ["/lab/doupo-analysis/", "/garden/workflow-not-prompts/", "/lab/", "/garden/"];
+        const button = document.getElementById("another-trail");
+        button.addEventListener("click", () => {
+          window.location.assign(trails[Math.floor(Math.random() * trails.length)]);
+        });
+        button.hidden = false;
+      })();
+    </script>
+  </body>
+</html>
