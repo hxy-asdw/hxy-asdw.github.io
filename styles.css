@@ -45,7 +45,7 @@ body[data-page="404"] a:focus-visible, body[data-page="404"] button:focus-visibl
   --surface-solid: #fbfaf6;
   --surface-muted: #e9e8e2;
   --ink: #182329;
-  --muted: #687277;
+  --muted: #646e73;
   --faint: #a7aca9;
   --line: rgba(24, 35, 41, 0.14);
   --line-strong: rgba(24, 35, 41, 0.25);
@@ -1813,6 +1813,10 @@ h1 {
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.v2-now-status {
+  color: #54707d;
 }
 
 .v2-now-text {

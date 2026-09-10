@@ -12,6 +12,12 @@ const link = (href, label, className = "v2-text-link") => (
   `<a class="${className}" href="${escapeHtml(href)}"${href.startsWith("http") ? ' target="_blank" rel="noreferrer"' : ""}>${escapeHtml(label)} <span aria-hidden="true">↗</span></a>`
 );
 
+function projectLinks(project) {
+  const caseStudy = project.caseStudy ? `<p>${link(project.caseStudy, "Open Case Study")}</p>` : "";
+  const repository = project.repoPublic === true && project.repo ? link(project.repo, "Open repository") : "";
+  return caseStudy + repository;
+}
+
 function renderNow() {
   const target = document.querySelector("[data-now-list]");
   if (!target) return;
@@ -73,8 +79,7 @@ function renderLab() {
         <h3>${escapeHtml(featured.title)}</h3>
         <p class="v2-lab-lead">${escapeHtml(featured.summary)}</p>
         ${labDetails(featured)}
-        ${link(featured.repo, "Open repository")}
-        ${featured.caseStudy ? `<p>${link(featured.caseStudy, "Read the exploration")}</p>` : ""}
+        ${projectLinks(featured)}
       </div>
     </article>
     <article class="v2-lab-secondary" id="${escapeHtml(secondary.id)}">
@@ -83,7 +88,7 @@ function renderLab() {
         <h3>${escapeHtml(secondary.title)}</h3>
         <p class="v2-lab-lead">${escapeHtml(secondary.summary)}</p>
         ${labDetails(secondary)}
-        ${link(secondary.repo, "Open repository")}
+        ${projectLinks(secondary)}
       </div>
       ${pipelineMarkup()}
     </article>
@@ -126,7 +131,7 @@ function renderIndexPage() {
         <h2>${escapeHtml(item.title)}</h2>
         <p class="v2-lab-lead">${escapeHtml(item.summary)}</p>
         ${labDetails(item)}
-        ${link(item.repo, "Open repository")}
+        ${projectLinks(item)}
       </article>
     `).join("");
   }
