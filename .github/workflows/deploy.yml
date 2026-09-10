@@ -40,6 +40,8 @@ jobs:
             script.js
             content.js
             favicon.svg
+            robots.txt
+            sitemap.xml
             lab/index.html
             lab/doupo-analysis/index.html
             lab/doupo-analysis/case-study.css
