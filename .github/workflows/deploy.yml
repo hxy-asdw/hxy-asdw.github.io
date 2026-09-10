@@ -27,10 +27,39 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare public site (explicit allowlist)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Fail closed if a previous step has already populated the destination.
+          mkdir _site
+          files=(
+            index.html
+            404.html
+            styles.css
+            script.js
+            content.js
+            favicon.svg
+            lab/index.html
+            lab/doupo-analysis/index.html
+            lab/doupo-analysis/case-study.css
+            garden/index.html
+            garden/note.css
+            garden/workflow-not-prompts/index.html
+            assets/lab/doupo-analysis/runtime-lab.png
+            assets/lab/doupo-analysis/seed93-replay.png
+          )
+          for file in "${files[@]}"; do
+            install -D -m 644 "$file" "_site/$file"
+          done
+          # Keep the complete deployment inventory visible in the Actions log.
+          find _site -type f | sort
+          test "$(find _site -type f | wc -l)" -eq "${#files[@]}"
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site/
 
       - name: Deploy to GitHub Pages
         id: deployment
