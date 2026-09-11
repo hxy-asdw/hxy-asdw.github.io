@@ -1553,14 +1553,37 @@ h1 {
 }
 
 .v2-status-dot {
-  position: relative;
-  z-index: 1;
   display: inline-block;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 4px rgba(203, 101, 70, 0.1);
+}
+
+.v2-trail-link {
+  appearance: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  vertical-align: baseline;
+}
+
+.v2-trail-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.v2-trail-link:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 3px;
 }
 
 .v2-hero {

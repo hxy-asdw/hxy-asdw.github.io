@@ -275,17 +275,8 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 
 if (document.body.dataset.page === "home") {
-  let clicks = 0;
-  let startedAt = 0;
-  document.querySelector(".v2-status-dot")?.addEventListener("click", () => {
-    const now = performance.now();
-    if (clicks === 0 || now - startedAt > 2000) {
-      clicks = 0;
-      startedAt = now;
-    }
-    if (++clicks === 3) {
-      window.location.assign("/the-trail-went-cold");
-    }
+  document.querySelector(".v2-trail-link")?.addEventListener("click", () => {
+    window.location.assign("/somewhere-off-the-trail/");
   });
 }
 
