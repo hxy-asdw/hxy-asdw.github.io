@@ -23,6 +23,21 @@ window.siteContent = {
   ],
   labs: [
     {
+      id: "ashline",
+      caseStudy: "/lab/ashline/",
+      detailLabel: "Explore Ashline",
+      play: "/games/ashline/",
+      title: "Ashline",
+      eyebrow: "2D SOULS-LIKE ACTION RPG",
+      status: "playable prototype / in development",
+      featured: false,
+      summary: "一个围绕耐力、格挡、闪避与敌人决斗构建的轻量 2D Action RPG。",
+      question: "一小组战斗动作，能否撑起值得反复练习的对决？",
+      whatBuilt: "可在浏览器直接游玩的战斗原型，包含轻重攻击、格挡、闪避、跳跃与耐力。",
+      whatHappened: "目前已能游玩，仍在开发中。",
+      nextQuestion: "怎样让每次敌人交手都更清晰、更有节奏？",
+    },
+    {
       id: "doupo-analysis",
       caseStudy: "/lab/doupo-analysis/",
       title: "doupo-analysis",

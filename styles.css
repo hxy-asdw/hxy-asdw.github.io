@@ -1943,6 +1943,10 @@ h1 {
   border-top: 1px solid var(--line-strong);
 }
 
+.v2-lab-ashline {
+  grid-column: 1 / -1;
+}
+
 .v2-pipeline {
   margin-top: 34px;
   padding-top: 18px;

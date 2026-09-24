@@ -13,9 +13,10 @@ const link = (href, label, className = "v2-text-link") => (
 );
 
 function projectLinks(project) {
-  const caseStudy = project.caseStudy ? `<p>${link(project.caseStudy, "Open Case Study")}</p>` : "";
+  const caseStudy = project.caseStudy ? `<p>${link(project.caseStudy, project.detailLabel || "Open Case Study")}</p>` : "";
+  const play = project.play ? `<p>${link(project.play, "Play")}</p>` : "";
   const repository = project.repoPublic === true && project.repo ? link(project.repo, "Open repository") : "";
-  return caseStudy + repository;
+  return play + caseStudy + repository;
 }
 
 function renderNow() {
@@ -69,7 +70,8 @@ function renderLab() {
   const target = document.querySelector("[data-lab-preview]");
   if (!target) return;
   const featured = content.labs.find((item) => item.featured) || content.labs[0];
-  const secondary = content.labs.find((item) => item.id !== featured?.id) || content.labs[1];
+  const secondary = content.labs.find((item) => item.id !== featured?.id && item.id !== "ashline") || content.labs[1];
+  const ashline = content.labs.find((item) => item.id === "ashline");
   if (!featured || !secondary) return;
 
   target.innerHTML = `
@@ -92,6 +94,17 @@ function renderLab() {
       </div>
       ${pipelineMarkup()}
     </article>
+    ${ashline && ashline !== featured && ashline !== secondary ? `
+      <article class="v2-lab-secondary v2-lab-ashline" id="${escapeHtml(ashline.id)}">
+        <div class="v2-secondary-copy">
+          <div class="v2-kicker"><span>03</span><span>${escapeHtml(ashline.eyebrow)}</span><span class="v2-state">${escapeHtml(ashline.status)}</span></div>
+          <h3>${escapeHtml(ashline.title)}</h3>
+          <p class="v2-lab-lead">${escapeHtml(ashline.summary)}</p>
+          ${labDetails(ashline)}
+          ${projectLinks(ashline)}
+        </div>
+      </article>
+    ` : ""}
   `;
   setupPipeline();
 }
