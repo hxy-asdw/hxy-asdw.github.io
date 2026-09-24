@@ -176,12 +176,12 @@ function setupPipeline() {
   if (!pipeline || !marker || !buttons.length) return;
 
   const markerPosition = (button) => {
-    const pipelineRect = pipeline.getBoundingClientRect();
-    const buttonRect = button.getBoundingClientRect();
+    const stages = button.closest(".v2-pipeline-stages");
+    // Layout offsets stay relative to the marker's track, without hover/press transforms.
     if (window.innerWidth <= 680) {
-      return { axis: "top", value: buttonRect.top + buttonRect.height / 2 - pipelineRect.top };
+      return { axis: "top", value: stages.offsetTop + button.offsetTop + button.offsetHeight / 2 };
     }
-    return { axis: "left", value: buttonRect.left + buttonRect.width / 2 - pipelineRect.left };
+    return { axis: "left", value: stages.offsetLeft + button.offsetLeft + button.offsetWidth / 2 };
   };
 
   const applyPosition = (axis, value) => {
