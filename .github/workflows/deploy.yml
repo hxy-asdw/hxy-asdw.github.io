@@ -52,8 +52,8 @@ jobs:
             assets/lab/doupo-analysis/runtime-lab.png
             assets/lab/doupo-analysis/seed93-replay.png
             games/ashline/index.html
-            games/ashline/assets/index-BcVI-4QR.js
-            games/ashline/assets/index-EgMzUSoi.css
+            games/ashline/assets/index-D_e7lvQD.js
+            games/ashline/assets/index-CCjPdcbd.css
           )
           for file in "${files[@]}"; do
             install -D -m 644 "$file" "_site/$file"
