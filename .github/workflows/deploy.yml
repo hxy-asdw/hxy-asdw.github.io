@@ -61,6 +61,8 @@ jobs:
             games/ashline/assets/ash-walkway-CprwhMkL.png
             games/ashline/assets/index-D5vNXyh-.js
             games/ashline/assets/index-D6PI551j.css
+            games/ashline/assets/index-CTzhK05A.css
+            games/ashline/assets/index-CgheMQmu.js
           )
           for file in "${files[@]}"; do
             install -D -m 644 "$file" "_site/$file"
