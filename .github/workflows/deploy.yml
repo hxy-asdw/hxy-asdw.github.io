@@ -54,6 +54,9 @@ jobs:
             games/ashline/index.html
             games/ashline/assets/index-BS2je6Zk.js
             games/ashline/assets/index-BqUyfTmV.css
+            games/ashline/assets/index-CxpYaB0E.js
+            games/ashline/assets/index-DHiAAG2y.css
+            games/ashline/assets/ash-ruins-G2HsPjD5.png
           )
           for file in "${files[@]}"; do
             install -D -m 644 "$file" "_site/$file"
