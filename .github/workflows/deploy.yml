@@ -37,6 +37,8 @@ jobs:
             index.html
             404.html
             styles.css
+            home-intro.css
+            home-intro.js
             script.js
             content.js
             favicon.svg

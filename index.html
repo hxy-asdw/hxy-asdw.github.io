@@ -3,6 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (() => {
+        try {
+          const seen = sessionStorage.getItem("aeneas.home-intro.seen");
+          sessionStorage.setItem("aeneas.home-intro.seen", "1");
+          const navigation = performance.getEntriesByType("navigation")[0];
+          const refreshing = navigation?.type === "reload";
+          if (
+            (!refreshing && (seen || location.hash)) || navigation?.type === "back_forward" ||
+            new URLSearchParams(location.search).get("motion") === "reduce" ||
+            matchMedia("(prefers-reduced-motion: reduce)").matches ||
+            !window.HTMLDialogElement || !Element.prototype.animate
+          ) return;
+
+          const root = document.documentElement;
+          root.dataset.homeIntro = "pending";
+          const release = () => {
+            clearTimeout(timeout);
+            root.removeAttribute("data-home-intro");
+            const dialog = document.getElementById("home-intro");
+            if (dialog?.open) dialog.close();
+            window.removeEventListener("home-intro-release", release);
+            window.removeEventListener("home-intro-finished", release);
+          };
+          // 外部动画脚本未能加载时，也要独立放行首页。
+          const timeout = setTimeout(() => {
+            window.dispatchEvent(new Event("home-intro-release"));
+          }, 6000);
+          window.addEventListener("home-intro-release", release);
+          window.addEventListener("home-intro-finished", release);
+        } catch {
+          // 存储不可用时跳过可选开场，正文仍可访问。
+        }
+      })();
+    </script>
     <meta name="theme-color" content="#f3f1eb" />
     <meta
       name="description"
@@ -20,8 +55,56 @@
     <meta name="twitter:title" content="Aeneas — Personal Lab / Digital Garden" />
     <meta name="twitter:description" content="Aeneas 的 Personal Lab / Digital Garden：实验、兔子洞，以及那些本来没必要做但还是做了的东西。" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="home-intro.css" />
   </head>
   <body class="lab-site" data-page="home">
+    <dialog class="home-intro" id="home-intro" aria-label="欢迎来到 Aeneas，按 Escape 跳过开场动画" tabindex="-1">
+      <div class="home-intro-screen" aria-hidden="true">
+        <div class="home-intro-curve"><i></i></div>
+      </div>
+      <p class="home-intro-label" aria-hidden="true">
+        <span class="home-intro-dot"></span><span data-home-intro-word>Hello</span>
+      </p>
+    </dialog>
+    <script>
+      (() => {
+        const root = document.documentElement;
+        if (!root.hasAttribute("data-home-intro")) return;
+        const dialog = document.getElementById("home-intro");
+        const motion = matchMedia("(prefers-reduced-motion: reduce)");
+        const release = () => window.dispatchEvent(new Event("home-intro-release"));
+        if (document.hidden || motion.matches || getComputedStyle(dialog).position !== "fixed") {
+          release();
+          return;
+        }
+        const previousFocus = document.activeElement;
+        const hidden = () => { if (document.hidden) release(); };
+        const motionChanged = event => { if (event.matches) release(); };
+        const cancel = event => { event.preventDefault(); release(); };
+        const cleanup = () => {
+          dialog.removeEventListener("cancel", cancel);
+          document.removeEventListener("visibilitychange", hidden);
+          window.removeEventListener("pagehide", release);
+          motion.removeEventListener("change", motionChanged);
+          if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+            previousFocus.focus({ preventScroll: true });
+          }
+        };
+        dialog.addEventListener("close", cleanup, { once: true });
+        dialog.addEventListener("cancel", cancel);
+        document.addEventListener("visibilitychange", hidden);
+        window.addEventListener("pagehide", release);
+        motion.addEventListener("change", motionChanged);
+        // 在外部脚本下载前建立模态保护，避免键盘进入黑幕后的正文。
+        try {
+          dialog.showModal();
+          root.dataset.homeIntro = "playing";
+        } catch {
+          release();
+          cleanup();
+        }
+      })();
+    </script>
     <header class="lab-header" data-header>
       <a class="lab-brand" href="#top" aria-label="返回 Aeneas 首页">
         <span class="lab-brand-mark">AENEAS</span>
@@ -161,5 +244,6 @@
 
     <script src="content.js"></script>
     <script src="script.js" defer></script>
+    <script src="home-intro.js" defer></script>
   </body>
 </html>
