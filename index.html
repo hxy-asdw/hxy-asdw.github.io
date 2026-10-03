@@ -38,7 +38,7 @@
         }
       })();
     </script>
-    <meta name="theme-color" content="#f3f1eb" />
+    <meta name="theme-color" content="#fafaf8" />
     <meta
       name="description"
       content="Aeneas 的 Personal Lab / Digital Garden：实验、兔子洞，以及那些本来没必要做但还是做了的东西。"
@@ -54,10 +54,10 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Aeneas — Personal Lab / Digital Garden" />
     <meta name="twitter:description" content="Aeneas 的 Personal Lab / Digital Garden：实验、兔子洞，以及那些本来没必要做但还是做了的东西。" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="home-intro.css" />
   </head>
-  <body class="lab-site" data-page="home">
+<body class="home-site" data-page="home">
     <dialog class="home-intro" id="home-intro" aria-label="欢迎来到 Aeneas，按 Escape 跳过开场动画" tabindex="-1">
       <div class="home-intro-screen" aria-hidden="true">
         <div class="home-intro-curve"><i></i></div>
@@ -105,145 +105,58 @@
         }
       })();
     </script>
-    <header class="lab-header" data-header>
-      <a class="lab-brand" href="#top" aria-label="返回 Aeneas 首页">
-        <span class="lab-brand-mark">AENEAS</span>
-        <span class="lab-brand-subtitle">personal lab / digital garden</span>
-      </a>
-
-      <nav class="lab-nav" aria-label="主导航">
-        <a href="#now" data-nav-link="now">Now</a>
-        <a href="#lab" data-nav-link="lab">Lab</a>
-        <a href="#garden" data-nav-link="garden">Garden</a>
-        <a href="#side-quests" data-nav-link="side-quests">Side Quests</a>
-        <a href="#about" data-nav-link="about">About</a>
-      </nav>
-
-      <a class="lab-header-github" href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">
-        GitHub <span aria-hidden="true">↗</span>
-      </a>
-    </header>
-
-    <main id="top">
-      <section class="v2-hero v2-section" aria-labelledby="hero-title">
-        <div class="v2-hero-copy">
-          <p class="v2-eyebrow"><span class="v2-status-dot"></span> AENEAS / PERSONAL SPACE</p>
-          <h1 id="hero-title">Aeneas</h1>
-          <p class="v2-hero-type">Curious enough to build it.</p>
-          <p class="v2-hero-lead">
-            I use AI, agents and code to explore questions that catch my attention — from useful tools to completely unnecessary experiments.
-          </p>
-          <div class="v2-actions" aria-label="进入网站内容">
-            <a class="v2-button v2-button-primary" href="#lab">
-              See what I’m building <span aria-hidden="true">↓</span>
-            </a>
-            <a class="v2-button v2-button-secondary" href="#about">
-              More about me <span aria-hidden="true">↘</span>
-            </a>
-          </div>
+  <a class="skip" href="#explore">跳到实验入口</a>
+  <header class="header">
+    <a class="brand" href="#top">Aeneas<span>.</span></a>
+    <nav aria-label="主导航"><a href="#explore">Lab</a><a href="#garden">Garden</a><a href="#about" data-open="about">About</a></nav>
+    <a class="header-github" href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">GitHub ↗</a>
+    <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="mobile-menu"><i></i><i></i></button>
+    <div class="mobile-menu" id="mobile-menu" hidden><a href="#explore">Lab / 实验</a><a href="#garden">Garden / 笔记</a><a href="#about" data-open="about">About / 关于</a></div>
+  </header>
+  <main id="top">
+    <h1 class="sr-only">Aeneas — Personal Lab / Digital Garden：因为好奇而动手。</h1>
+    <section class="journey" id="journey" aria-label="从好奇到实验的连续场景">
+      <div class="stage" id="stage">
+        <canvas id="field" aria-hidden="true"></canvas>
+        <div class="opening" id="opening">
+          <p class="top-note mono">PERSONAL LAB / DIGITAL GARDEN</p>
+          <div class="hero-words" aria-hidden="true"><span class="word-one">Curious enough.</span><span class="word-two">Build <em>it.</em></span></div>
+          <div class="opening-note"><span class="mini-line"></span><p>一个用来保存好奇心的地方。<br>用代码、AI 和 Agent，把问题继续追下去。</p></div>
+          <a class="scroll-cue" href="#explore"><span>下滑，展开实验</span><span class="cue-arrow" aria-hidden="true">↓</span></a>
         </div>
-
-        <div class="v2-hero-signal" aria-label="这个空间保存的内容">
-          <div class="v2-signal-head">
-            <span>currently open</span>
-            <span>01—04</span>
-          </div>
-          <div class="v2-signal-list">
-            <div class="v2-signal-row"><span>01</span><div><strong>personal website</strong><p class="v2-signal-description">turning this place into something worth exploring</p></div></div>
-            <div class="v2-signal-row"><span>02</span><div><strong>agent workflows</strong><p class="v2-signal-description">learning how to work with Codex instead of just prompting it</p></div></div>
-            <div class="v2-signal-row"><span>03</span><div><strong>doupo-analysis</strong><p class="v2-signal-description">a tiny web game that turned into a reproducible experiment</p></div></div>
-            <div class="v2-signal-row"><span>04</span><div><strong>career direction</strong><p class="v2-signal-description">figuring out what kind of work I actually enjoy</p></div></div>
-          </div>
-          <p class="v2-signal-note">No grand plan. Just a place to keep the trail.</p>
+        <div class="world-copy" id="world-copy" aria-hidden="true">
+          <p class="mono blue">01 / FOLLOW THE QUESTIONS</p>
+          <h2>一个问题，<br>走到另一个。</h2>
+          <p class="world-description">从一个小游戏，到一条工作流，<br>再到一次值得反复练习的对决。</p>
         </div>
-      </section>
-
-      <section class="v2-section v2-section-now" id="now" aria-labelledby="now-title">
-        <div class="v2-section-head v2-section-head-quiet">
-          <div>
-            <p class="v2-eyebrow">NOW / SEPTEMBER 2026</p>
-            <h2 id="now-title">最近在做什么。</h2>
-          </div>
-          <p class="v2-section-intro">这里会变。不是完整的 changelog，只是我最近在推进的几件事。</p>
+        <p class="world-instruction" id="world-hint"><span class="instruction-dot"></span><span id="world-instruction">拖动节点，或者点一个实验。</span></p>
+        <div class="constellation" id="constellation" aria-label="实验探索地图" inert>
+          <a class="node node-doupo" href="lab/doupo-analysis/" draggable="false" data-node="doupo" data-open="doupo" aria-label="打开 doupo-analysis 实验"><span class="node-core"><i></i></span><span class="node-label"><span class="node-number mono">01 / RUNTIME</span><strong>doupo-analysis</strong><span class="node-hint">点击打开 ↗</span></span></a>
+          <a class="node node-excel" href="https://github.com/hxy-asdw/excel-data-report" draggable="false" data-node="excel" data-open="excel" aria-label="打开 Excel Data Report 实验"><span class="node-core"><i></i></span><span class="node-label"><span class="node-number mono">02 / AGENT</span><strong>Excel Data Report</strong><span class="node-hint">点击打开 ↗</span></span></a>
+          <a class="node node-ashline" href="games/ashline/" draggable="false" data-node="ashline" data-open="ashline" aria-label="打开 Ashline 游戏实验"><span class="node-core"><i></i></span><span class="node-label"><span class="node-number mono">03 / PLAYABLE</span><strong>Ashline</strong><span class="node-hint">点击打开 ↗</span></span></a>
         </div>
-        <div class="v2-now-list" data-now-list></div>
-      </section>
-
-      <section class="v2-section v2-section-lab" id="lab" aria-labelledby="lab-title">
-        <div class="v2-section-head v2-section-head-strong">
-          <div>
-            <p class="v2-eyebrow">LAB / THINGS I BUILT TO FIND OUT</p>
-            <h2 id="lab-title">认真折腾过的实验。</h2>
-          </div>
-          <a class="v2-section-link" href="lab/">Open Lab index <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="v2-lab-preview" data-lab-preview>
-          <p><a class="v2-text-link" href="/lab/doupo-analysis/">doupo-analysis — Read the exploration</a></p>
-        </div>
-      </section>
-
-      <section class="v2-section v2-section-garden" id="garden" aria-labelledby="garden-title">
-        <div class="v2-section-head v2-section-head-quiet">
-          <div>
-            <p class="v2-eyebrow">GARDEN / NOTES &amp; RABBIT HOLES</p>
-            <h2 id="garden-title">还在长出来的东西。</h2>
-          </div>
-          <a class="v2-section-link" href="garden/">Open the garden <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="v2-garden-list" data-garden-list>
-          <p><a class="v2-text-link" href="/garden/workflow-not-prompts/">最重要的不是 Prompt — Codex workflow Garden Note</a></p>
-        </div>
-      </section>
-
-      <section class="v2-section v2-section-sidequests" id="side-quests" aria-labelledby="side-quests-title">
-        <div class="v2-section-head v2-section-head-light">
-          <div>
-            <p class="v2-eyebrow">SIDE QUESTS / RABBIT HOLES</p>
-            <h2 id="side-quests-title">顺手追进去的小问题。</h2>
-          </div>
-          <p class="v2-section-intro">有些问题本来只是顺手看看，后来不知不觉就追得比预想更远。</p>
-        </div>
-        <div class="v2-sidequest-list" data-sidequest-list></div>
-      </section>
-
-      <section class="v2-section v2-section-about" id="about" aria-labelledby="about-title">
-        <div class="v2-section-head v2-section-head-quiet">
-          <div>
-            <p class="v2-eyebrow">ABOUT / WHY AENEAS</p>
-            <h2 id="about-title">一个用来保存过程的地方。</h2>
-          </div>
-        </div>
-        <div class="v2-about-grid">
-          <p class="v2-about-manifesto">我更习惯通过真的做点什么，来搞懂自己还不会的东西。</p>
-          <div class="v2-about-copy">
-            <p>
-              Aeneas 是我在网上使用的名字。
-            </p>
-            <p>我经常不是因为已经知道该怎么做，才开始一个项目。更多时候只是先碰到一个让我好奇的问题，然后用代码、AI 和 Agent 一点点把它拆开。</p>
-            <p>有些最后变成了完整实验，有些只留下了一篇笔记，还有一些做到一半就停了。我想把这些过程留下来——不只是最后做成了什么，也包括中间绕过的路、改过的想法和还没回答的问题。</p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="v2-footer" id="elsewhere">
-      <div>
-        <p class="v2-eyebrow">ELSEWHERE</p>
-        <p class="v2-footer-note">The rest of the trail lives <button class="v2-trail-link" type="button" aria-label="Explore elsewhere">elsewhere</button>.</p>
+        <div class="stage-bottom"><span class="mono" id="scene-label">KEEP THE CURIOSITY.</span><div class="scene-progress" aria-hidden="true"><i id="scene-progress"></i></div><span class="mono" id="scene-count">01 / 02</span></div>
       </div>
-      <div class="v2-footer-links">
-        <a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">
-          <span>GitHub</span><span>hxy-asdw ↗</span>
-        </a>
-        <a href="mailto:2870854049@qq.com">
-          <span>Email</span><span>2870854049@qq.com ↗</span>
-        </a>
-      </div>
-      <a class="v2-back-top" href="#top">Back to top ↑</a>
-    </footer>
-
-    <script src="content.js"></script>
-    <script src="script.js" defer></script>
-    <script src="home-intro.js" defer></script>
-  </body>
+      <span class="explore-anchor" id="explore"></span><span class="explore-anchor" id="lab"></span>
+    </section>
+    <section class="directory" id="directory" aria-labelledby="directory-title">
+      <div class="directory-head"><h2 class="mono" id="directory-title">KEEP EXPLORING</h2><span class="mono">BUILD. OBSERVE. KEEP THE TRAIL.</span></div>
+      <div class="directory-row" data-peek="doupo"><span class="row-index mono">01</span><a class="row-main" href="lab/"><strong>Lab<span class="blue">.</span></strong><span class="row-caption">认真动手过的实验</span></a><span class="inline-preview"><img src="assets/lab/doupo-analysis/runtime-lab.png" width="1578" height="1046" loading="lazy" alt="doupo 离线调试的真实截图"></span><a class="row-arrow" href="lab/doupo-analysis/" data-open="doupo" aria-label="快速预览 lab 内容" title="快速预览">↗</a></div>
+      <div class="directory-row" id="garden" data-peek="workflow"><span class="row-index mono">02</span><a class="row-main" href="garden/"><strong>Garden<span class="blue">.</span></strong><span class="row-caption">还没长成结论的想法</span></a><span class="inline-preview note-inline"><span>最重要的<br>不是 Prompt。</span></span><a class="row-arrow" href="garden/workflow-not-prompts/" data-open="workflow" aria-label="快速预览 garden 内容" title="快速预览">↗</a></div>
+      <div class="directory-row about-row"><span class="row-index mono">03</span><a class="row-main" href="#about" data-open="about"><strong>About<span class="blue">.</span></strong><span class="row-caption">那个一直在追问的人</span></a><span class="about-preview">我更习惯通过真的做点什么，<br>来搞懂自己还不会的东西。</span><a class="row-arrow" href="#about" data-open="about" aria-label="快速预览 about 内容" title="快速预览">↗</a></div>
+      <div class="directory-extras"><a href="#now" data-open="now">Now / 最近在做什么</a><a href="#side-quests" data-open="sidequests">Side Quests / 顺手追进去的问题</a></div>
+    </section>
+    <noscript><section class="no-script-about" id="about"><h2>一个保存过程的地方。</h2><p>Aeneas 是我在网上使用的名字。我更习惯通过真的做点什么，来搞懂自己还不会的东西。</p><p>这里保存实验、笔记和还没回答的问题。可以从上方 Lab、Garden 进入完整内容。</p><h3 id="now">最近在做什么</h3><p>完善个人网站，学习 Codex、Agent 与 Git 工作流，探索个人 AI 工具与长期方向。</p><h3 id="side-quests">顺手追进去的问题</h3><p>chat-style-distillation · codex-reconnect-debug · github-pages-learning</p></section></noscript>
+    <footer class="footer"><div><p class="mono">MORE THINGS WILL GROW HERE.</p><p class="footer-line">Keep the <em>trail.</em><span class="blue">↗</span></p></div><div class="footer-links"><a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">回到起点 ↑</a><a href="mailto:2870854049@qq.com">Email ↗</a></div></footer>
+  </main>
+  <div class="cursor-preview" id="cursor-preview" aria-hidden="true"><div class="peek-doupo" data-peek-card="doupo"><img src="assets/lab/doupo-analysis/runtime-lab.png" loading="lazy" alt=""><p class="mono">DOUPO-ANALYSIS / OPEN THE EXPERIMENT ↗</p></div><div class="peek-note" data-peek-card="workflow" hidden><p class="mono">A FIELD NOTE / GROWING</p><strong>最重要的<br>不是 Prompt。</strong><span>把一次开发过程，变成一种工作方法。</span></div></div>
+  <dialog class="detail-dialog" id="detail-dialog" aria-labelledby="detail-title">
+    <div class="detail-top"><a class="detail-brand" href="#top" id="detail-home">Aeneas<span class="blue">.</span></a><span class="mono" id="detail-kicker"></span><button class="close-dialog" type="button" aria-label="关闭并返回实验场景">关闭 <span aria-hidden="true">×</span></button></div>
+    <div class="detail-body"><div class="detail-intro"><p class="mono blue" id="detail-type"></p><h2 id="detail-title" tabindex="-1"></h2><p class="detail-summary" id="detail-summary"></p></div><div class="detail-media" id="detail-media"></div><div class="detail-copy" id="detail-copy"></div><div class="detail-actions" id="detail-actions"></div></div>
+    <div class="detail-switch" id="detail-switch" aria-label="切换实验"><button type="button" data-detail-project="doupo">01 doupo-analysis</button><button type="button" data-detail-project="excel">02 Excel Data Report</button><button type="button" data-detail-project="ashline">03 Ashline</button></div>
+  </dialog>
+  <script src="content.js"></script>
+  <script src="home.js" defer></script>
+  <script src="home-intro.js" defer></script>
+</body>
 </html>

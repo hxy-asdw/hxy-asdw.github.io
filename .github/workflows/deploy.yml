@@ -40,6 +40,8 @@ jobs:
             home-intro.css
             home-intro.js
             script.js
+            home.css
+            home.js
             content.js
             favicon.svg
             robots.txt
@@ -53,6 +55,7 @@ jobs:
             garden/workflow-not-prompts/index.html
             assets/lab/doupo-analysis/runtime-lab.png
             assets/lab/doupo-analysis/seed93-replay.png
+            assets/lab/ashline/preview.png
             games/ashline/index.html
             games/ashline/assets/index-BS2je6Zk.js
             games/ashline/assets/index-BqUyfTmV.css
