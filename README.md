@@ -1,5 +1,11 @@
 # hxy-asdw.github.io
 
+**Aeneas — Personal Lab / Digital Garden.** A place for experiments, field notes, and questions worth following.
+
+[Visit the lab](https://hxy-asdw.github.io/) · [Play a little fetch](https://hxy-asdw.github.io/games/pug/) · [Sample data report](https://hxy-asdw.github.io/lab/excel-data-report/report.html) · [Olist report](https://hxy-asdw.github.io/lab/olist-business-analysis/report.html)
+
+Built with plain HTML, CSS, JavaScript, and AI assistance. No package installation or build step is needed for local browsing.
+
 Aeneas 的 Personal Lab / Digital Garden，使用静态 HTML、CSS 和 JavaScript，发布到 GitHub Pages。
 
 ## 本地预览
@@ -23,5 +29,7 @@ python3 -m http.server 8000
 项目详情使用 URL hash，支持直接访问、浏览器返回和前进；关闭后恢复原来的滚动位置。保留 `#lab`、`#garden`、`#now`、`#side-quests` 和 `#about` 入口。手机纵向滑动用于浏览页面；开启“减少动态效果”时直接显示实验节点。
 
 ## 发布
+
+`games/pug/` 是无需外部资源的20秒小游戏；两个 `lab/*/report.html` 分别为合成样例报告和公开历史数据分析报告的展示副本。更新报告时从对应仓库同步；Excel 样例不代表真实模型评估成绩，Olist 统计关联不代表因果验证。
 
 GitHub Actions 通过 `.github/workflows/deploy.yml` 的文件清单构建站点。新增公开资源时，也需要加入这个清单。`design-preview/` 存放设计原型、效果截图和验证记录，不进入发布产物。

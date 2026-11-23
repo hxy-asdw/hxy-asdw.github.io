@@ -54,6 +54,8 @@ window.siteContent = {
     },
     {
       id: "excel-data-report",
+      caseStudy: "/lab/excel-data-report/report.html",
+      detailLabel: "打开示例报告",
       title: "excel-data-report",
       eyebrow: "AGENT RELIABILITY LAB",
       status: "building",
@@ -82,8 +84,8 @@ window.siteContent = {
     },
     {
       id: "olist-business-analysis-report",
-      caseStudy: "https://github.com/hxy-asdw/olist-business-analysis-report/blob/main/report/%E5%B7%B4%E8%A5%BFOlist%E5%95%86%E4%B8%9A%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A_%E5%AE%8C%E6%95%B4%E7%89%88.html",
-      detailLabel: "查看 HTML 报告文件",
+      caseStudy: "/lab/olist-business-analysis/report.html",
+      detailLabel: "阅读交互报告",
       title: "Olist 商业分析",
       eyebrow: "FOLLOW THE DATA",
       status: "completed analysis",

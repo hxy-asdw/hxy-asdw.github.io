@@ -48,6 +48,9 @@ jobs:
             sitemap.xml
             lab/index.html
             lab/ashline/index.html
+            lab/excel-data-report/report.html
+            lab/olist-business-analysis/report.html
+            games/pug/index.html
             lab/doupo-analysis/index.html
             lab/doupo-analysis/case-study.css
             garden/index.html

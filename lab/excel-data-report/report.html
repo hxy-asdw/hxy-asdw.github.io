@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小样销售数据回归测试报告</title>
+<style>
+:root { --accent:#2563EB; --ink:#1E293B; --muted:#64748B; --line:#E2E8F0; --bg:#FFFFFF; --soft:#F8FAFC; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--soft); color:var(--ink); font-family:'Segoe UI','Microsoft YaHei','PingFang SC',Arial,sans-serif; line-height:1.65; }
+.wrap { max-width:1020px; margin:0 auto; padding:40px 32px 64px; background:var(--bg); }
+header { border-bottom:3px solid var(--accent); padding-bottom:18px; margin-bottom:28px; }
+h1 { font-size:26px; margin:0 0 6px; line-height:1.3; }
+.subtitle { color:var(--muted); font-size:15px; }
+.meta { color:var(--muted); font-size:13px; margin-top:10px; }
+h2 { font-size:19px; margin:36px 0 14px; padding-left:10px; border-left:4px solid var(--accent); }
+p { margin:10px 0; }
+.cards { display:flex; flex-wrap:wrap; gap:12px; }
+.card { flex:1 1 170px; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px 14px; }
+.card .num { font-size:20px; font-weight:600; }
+.card .lab { font-size:12px; color:var(--muted); }
+.warn { background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:10px 14px; font-size:13px; color:#92400E; margin:14px 0; }
+table { border-collapse:collapse; width:100%; font-size:13px; }
+th, td { border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+th { background:var(--soft); }
+.finding { border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:18px 0; }
+.finding .q { font-weight:600; font-size:15px; }
+.badge { display:inline-block; font-size:12px; border-radius:999px; padding:2px 10px; margin-left:8px; vertical-align:2px; }
+.badge-high { background:#ECFDF5; color:#047857; }
+.badge-medium { background:#FFFBEB; color:#B45309; }
+.badge-low { background:#F1F5F9; color:#64748B; }
+.finding .row { margin:12px 0 0; font-size:14px; }
+.finding .label { color:var(--muted); font-size:12px; margin-bottom:2px; }
+.chart { margin:14px 0; overflow-x:auto; }
+ul { margin:8px 0; padding-left:22px; }
+footer { margin-top:40px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<aside style="padding:16px 5%;background:#edf1e8;color:#1c3537;font:14px/1.6 Arial,sans-serif">Synthetic sample · 12 fixture rows and fixed findings; no live model call. <a href="https://github.com/hxy-asdw/excel-data-report">Source &amp; reproduction ↗</a> · <a href="../../">Personal lab ↗</a></aside>
+<div class="wrap">
+<header>
+  <h1>小样销售数据回归测试报告</h1>
+  <div class="subtitle"></div>
+  <div class="meta">生成时间：2026-11-23 14:20 ｜ 数据来源：sample_sales.csv</div>
+</header>
+
+<h2>执行摘要</h2>
+<p>小样数据 12 条订单，总销售额 1,190、总利润 150；销售额前高后低（1 月最高 300、6 月最低 110），Technology 品类贡献利润 108（占 72%），East 区域销售额最高 380。</p>
+
+<h2>数据概况</h2>
+<div class="cards"><div class="card"><div class="num">12</div><div class="lab">数据行数</div></div>
+<div class="card"><div class="num">7</div><div class="lab">字段数</div></div>
+<div class="card"><div class="num">2024-01-05</div><div class="lab">date 最早</div></div>
+<div class="card"><div class="num">2024-06-18</div><div class="lab">date 最晚</div></div></div>
+
+
+<h2>关键发现</h2>
+<div class="finding"><div class="q">月度销售额趋势如何？<span class="badge badge-high">置信度：高</span></div><div class="chart"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',Arial,sans-serif"><text x="450" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#1E293B">月度销售额趋势如何？</text>
+<line x1="78" y1="370.0" x2="872" y2="370.0" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="374.0" text-anchor="end" font-size="11" fill="#64748B">100.0</text>
+<line x1="78" y1="290.5" x2="872" y2="290.5" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="294.5" text-anchor="end" font-size="11" fill="#64748B">150.0</text>
+<line x1="78" y1="211.0" x2="872" y2="211.0" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="215.0" text-anchor="end" font-size="11" fill="#64748B">200.0</text>
+<line x1="78" y1="131.5" x2="872" y2="131.5" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="135.5" text-anchor="end" font-size="11" fill="#64748B">250.0</text>
+<line x1="78" y1="52.0" x2="872" y2="52.0" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="56.0" text-anchor="end" font-size="11" fill="#64748B">300.0</text>
+<text x="78.0" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-01</text>
+<text x="236.8" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-02</text>
+<text x="395.6" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-03</text>
+<text x="554.4" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-04</text>
+<text x="713.2" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-05</text>
+<text x="872.0" y="388" text-anchor="middle" font-size="11" fill="#64748B">2024-06</text>
+<line x1="78" y1="370" x2="872" y2="370" stroke="#C7D2DE" stroke-width="1"/>
+<line x1="78" y1="52" x2="78" y2="370" stroke="#C7D2DE" stroke-width="1"/>
+<path d="M 78.0 52.0 L 236.8 211.0 L 395.6 211.0 L 554.4 290.5 L 713.2 163.3 L 872.0 354.1" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="78.0" cy="52.0" r="3" fill="#2563EB"/>
+<circle cx="236.8" cy="211.0" r="3" fill="#2563EB"/>
+<circle cx="395.6" cy="211.0" r="3" fill="#2563EB"/>
+<circle cx="554.4" cy="290.5" r="3" fill="#2563EB"/>
+<circle cx="713.2" cy="163.3" r="3" fill="#2563EB"/>
+<circle cx="872.0" cy="354.1" r="3" fill="#2563EB"/></svg>
+</div><div class="row"><div class="label">数据观察</div>月度销售额累计 1,190，1 月最高 300、6 月最低 110，整体呈前高后低走势。</div><div class="row"><div class="label">解读</div>样本覆盖半年且总量小，前半段销售额明显高于后半段，可能与数据构造有关。</div></div>
+<div class="finding"><div class="q">各品类的利润占比如何？<span class="badge badge-high">置信度：高</span></div><div class="chart"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',Arial,sans-serif"><text x="450" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#1E293B">各品类的利润占比如何？</text>
+<path d="M 250.0 93.0 A 132.0 132.0 0 1 1 120.3 249.7 L 167.5 240.7 A 84.0 84.0 0 1 0 250.0 141.0 Z" fill="#2563EB" stroke="#FFFFFF" stroke-width="2"/>
+<path d="M 120.3 249.7 A 132.0 132.0 0 0 1 159.6 128.8 L 192.5 163.8 A 84.0 84.0 0 0 0 167.5 240.7 Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+<path d="M 159.6 128.8 A 132.0 132.0 0 0 1 250.0 93.0 L 250.0 141.0 A 84.0 84.0 0 0 0 192.5 163.8 Z" fill="#10B981" stroke="#FFFFFF" stroke-width="2"/>
+<text x="250" y="219" text-anchor="middle" font-size="22" font-weight="600" fill="#1E293B">150.0</text>
+<text x="250" y="241" text-anchor="middle" font-size="11" fill="#64748B">合计</text>
+<rect x="430" y="64" width="12" height="12" rx="2" fill="#2563EB"/>
+<text x="450" y="74" font-size="12" fill="#1E293B">Technology</text>
+<text x="862" y="74" text-anchor="end" font-size="12" fill="#64748B">108.0（72.0%）</text>
+<rect x="430" y="88" width="12" height="12" rx="2" fill="#F59E0B"/>
+<text x="450" y="98" font-size="12" fill="#1E293B">Office</text>
+<text x="862" y="98" text-anchor="end" font-size="12" fill="#64748B">24（16.0%）</text>
+<rect x="430" y="112" width="12" height="12" rx="2" fill="#10B981"/>
+<text x="450" y="122" font-size="12" fill="#1E293B">Furniture</text>
+<text x="862" y="122" text-anchor="end" font-size="12" fill="#64748B">18（12.0%）</text></svg>
+</div><div class="row"><div class="label">数据观察</div>品类利润合计 150，Technology 108（占 72%）最高，Office 24（占 16%）、Furniture 18（占 12%）。</div><div class="row"><div class="label">解读</div>利润高度集中于 Technology；Furniture 含一笔 -5 亏损订单拉低整体。</div></div>
+<div class="finding"><div class="q">各区域的销售额排名如何？<span class="badge badge-high">置信度：高</span></div><div class="chart"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',Arial,sans-serif"><text x="450" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#1E293B">各区域的销售额排名如何？</text>
+<line x1="78.0" y1="52" x2="78.0" y2="370" stroke="#E8EDF3" stroke-width="1"/>
+<text x="78.0" y="386" text-anchor="middle" font-size="11" fill="#64748B">0</text>
+<line x1="286.9" y1="52" x2="286.9" y2="370" stroke="#E8EDF3" stroke-width="1"/>
+<text x="286.9" y="386" text-anchor="middle" font-size="11" fill="#64748B">100.0</text>
+<line x1="495.9" y1="52" x2="495.9" y2="370" stroke="#E8EDF3" stroke-width="1"/>
+<text x="495.9" y="386" text-anchor="middle" font-size="11" fill="#64748B">200.0</text>
+<line x1="704.8" y1="52" x2="704.8" y2="370" stroke="#E8EDF3" stroke-width="1"/>
+<text x="704.8" y="386" text-anchor="middle" font-size="11" fill="#64748B">300.0</text>
+<line x1="913.8" y1="52" x2="913.8" y2="370" stroke="#E8EDF3" stroke-width="1"/>
+<text x="913.8" y="386" text-anchor="middle" font-size="11" fill="#64748B">400.0</text>
+<rect x="78" y="52.0" width="438.8" height="72.5" fill="#2563EB"/>
+<text x="68" y="92.2" text-anchor="end" font-size="12" fill="#1E293B">West</text>
+<text x="522.8" y="92.2" font-size="11" fill="#64748B">210.0</text>
+<rect x="78" y="131.5" width="585.1" height="72.5" fill="#2563EB"/>
+<text x="68" y="171.8" text-anchor="end" font-size="12" fill="#1E293B">Central</text>
+<text x="669.1" y="171.8" font-size="11" fill="#64748B">280.0</text>
+<rect x="78" y="211.0" width="668.6" height="72.5" fill="#2563EB"/>
+<text x="68" y="251.2" text-anchor="end" font-size="12" fill="#1E293B">South</text>
+<text x="752.6" y="251.2" font-size="11" fill="#64748B">320.0</text>
+<rect x="78" y="290.5" width="794.0" height="72.5" fill="#2563EB"/>
+<text x="68" y="330.8" text-anchor="end" font-size="12" fill="#1E293B">East</text>
+<text x="878.0" y="330.8" font-size="11" fill="#64748B">380.0</text></svg>
+</div><div class="row"><div class="label">数据观察</div>区域销售额合计 1,190，East 380 最高，South 320、Central 280、West 210 最低。</div><div class="row"><div class="label">解读</div>East 与 South 贡献主要销售额，West 体量最小。</div></div>
+<div class="finding"><div class="q">单笔利润的分布如何？<span class="badge badge-high">置信度：高</span></div><div class="chart"><svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" font-family="'Segoe UI','Microsoft YaHei','PingFang SC',Arial,sans-serif"><text x="450" y="28" text-anchor="middle" font-size="17" font-weight="600" fill="#1E293B">单笔利润的分布如何？</text>
+<line x1="78" y1="370.0" x2="872" y2="370.0" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="374.0" text-anchor="end" font-size="11" fill="#64748B">0</text>
+<line x1="78" y1="306.4" x2="872" y2="306.4" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="310.4" text-anchor="end" font-size="11" fill="#64748B">1</text>
+<line x1="78" y1="242.8" x2="872" y2="242.8" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="246.8" text-anchor="end" font-size="11" fill="#64748B">2</text>
+<line x1="78" y1="179.2" x2="872" y2="179.2" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="183.2" text-anchor="end" font-size="11" fill="#64748B">3</text>
+<line x1="78" y1="115.6" x2="872" y2="115.6" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="119.6" text-anchor="end" font-size="11" fill="#64748B">4</text>
+<line x1="78" y1="52.0" x2="872" y2="52.0" stroke="#E8EDF3" stroke-width="1"/>
+<text x="68" y="56.0" text-anchor="end" font-size="11" fill="#64748B">5</text>
+<rect x="78.0" y="306.4" width="131.3" height="63.6" fill="#2563EB" opacity="0.85"/>
+<rect x="210.3" y="52.0" width="131.3" height="318.0" fill="#2563EB" opacity="0.85"/>
+<rect x="342.7" y="242.8" width="131.3" height="127.2" fill="#2563EB" opacity="0.85"/>
+<rect x="475.0" y="242.8" width="131.3" height="127.2" fill="#2563EB" opacity="0.85"/>
+<rect x="607.3" y="306.4" width="131.3" height="63.6" fill="#2563EB" opacity="0.85"/>
+<rect x="739.7" y="306.4" width="131.3" height="63.6" fill="#2563EB" opacity="0.85"/>
+<text x="78.0" y="388" text-anchor="middle" font-size="11" fill="#64748B">-5</text>
+<text x="872.0" y="388" text-anchor="middle" font-size="11" fill="#64748B">40</text>
+<line x1="78" y1="370" x2="872" y2="370" stroke="#C7D2DE" stroke-width="1"/></svg>
+</div><div class="row"><div class="label">数据观察</div>利润样本 12 条，均值 12.5、中位数 8.5、最低 -5、最高 40。</div><div class="row"><div class="label">解读</div>多数订单利润中等，存在一笔亏损订单（Furniture，-5）。</div></div>
+
+<h2>结论与风险提示</h2>
+<p>本次分析未发现需要特别提示的风险点。</p>
+
+<h2>附录：数据字典</h2>
+<table><thead><tr><th>字段</th><th>类型</th><th>缺失率</th><th>唯一值</th><th>范围 / 取值</th></tr></thead><tbody><tr><td>date</td><td>日期</td><td>0.0%</td><td>12</td><td>2024-01-05 ~ 2024-06-18</td></tr><tr><td>category</td><td>类别</td><td>0.0%</td><td>3</td><td>Technology、Furniture、Office</td></tr><tr><td>region</td><td>类别</td><td>0.0%</td><td>4</td><td>West、East、South、Central</td></tr><tr><td>segment</td><td>类别</td><td>0.0%</td><td>3</td><td>Consumer、Corporate、Home Office</td></tr><tr><td>sales</td><td>数值</td><td>0.0%</td><td>11</td><td>30.0 ~ 200.0</td></tr><tr><td>profit</td><td>数值</td><td>0.0%</td><td>12</td><td>-5.0 ~ 40.0</td></tr><tr><td>discount</td><td>数值</td><td>0.0%</td><td>6</td><td>0.0 ~ 0.3</td></tr></tbody></table>
+
+<h2>方法论</h2>
+<p>本报告由 excel-data-report 技能自动生成：ingest.py 完成数据清洗与概况统计；LLM 基于概况制定分析计划（plan.json）；analyze.py 以确定性代码完成聚合计算与图表绘制；LLM 基于计算结果撰写解读（findings.json）；render_html.py 渲染为单文件 HTML。全部中间产物保留在输出目录，可审计、可干预。</p>
+
+<footer>由 excel-data-report 自动生成。图表与统计结果由确定性代码计算，解读由 LLM 生成，请结合业务背景判断。</footer>
+</div>
+</body>
+</html>

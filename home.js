@@ -176,7 +176,7 @@
     if (!project) continue;
     const links = [];
     if (project.play) links.push(['打开游戏，试一试', siteHref(project.play)]);
-    if (project.caseStudy) links.push([project.play ? '阅读开发记录' : '打开完整实验记录', siteHref(project.caseStudy)]);
+    if (project.caseStudy) links.push([project.detailLabel || (project.play ? '阅读开发记录' : '打开完整实验记录'), siteHref(project.caseStudy)]);
     if (project.repoPublic === true && project.repo) links.push(['查看项目仓库', siteHref(project.repo)]);
     data[key] = {
       title: project.title,

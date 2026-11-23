@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3eb">
+  <meta name="description" content="A tiny fetching game. Twenty seconds, a tennis ball, and one very good pug.">
+  <title>A little fetch — Aeneas</title>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <style>
+    :root{color-scheme:light;--paper:#f5f3eb;--ink:#1c3537;--orange:#dc623e;--line:#d5d9ce}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}button:disabled{cursor:default}
+    :focus-visible{outline:3px solid var(--orange);outline-offset:5px}
+    main{width:min(880px,90%);margin:auto}nav{display:flex;justify-content:space-between;align-items:center;padding:28px 0;border-bottom:1px solid var(--line);font-size:13px}
+    .brand{font-weight:700;font-size:22px;letter-spacing:-1px}.brand span{color:var(--orange)}.eyebrow{font:11px/1.5 monospace;letter-spacing:2px;margin:44px 0 16px}
+    h1{font-size:clamp(38px,7vw,66px);line-height:1.06;letter-spacing:-3px;font-weight:600;margin:0 0 18px}h1 em{font-family:Georgia,serif;font-weight:400}
+    .intro{max-width:550px;font-size:15px;line-height:1.7;color:#5f7069;margin-bottom:26px}.intro strong{color:var(--ink)}
+    .game-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}.stats{display:flex;gap:28px;font:12px monospace}.stats strong{font-size:23px;font-weight:500;display:block;margin-top:5px;font-variant-numeric:tabular-nums}
+    #start{border:0;border-radius:28px;background:var(--ink);color:var(--paper);padding:14px 23px;font-weight:600;font-size:13px}#start:hover{background:#345553}
+    #yard{height:clamp(300px,49vh,420px);position:relative;overflow:hidden;border:1px solid #cbd4c5;border-radius:18px;background-color:#e6ecdf;background-image:radial-gradient(#bdcbb6 1px,transparent 1px);background-size:26px 26px;touch-action:none;isolation:isolate}
+    #yard:before,#yard:after{content:"";position:absolute;width:190px;height:90px;border:1px solid #c9d4c2;border-radius:50%;transform:rotate(-20deg);pointer-events:none}#yard:before{top:-40px;right:-20px}#yard:after{bottom:-45px;left:-20px}
+    .yard-label{position:absolute;left:22px;bottom:18px;font:10px monospace;letter-spacing:2px;color:#64795e;pointer-events:none}
+    #pug{position:absolute;left:50%;top:60%;width:82px;height:82px;transform:translate(-50%,-50%);pointer-events:none;z-index:2}#pug svg{display:block;width:100%;height:100%}
+    #ball{position:absolute;left:76%;top:30%;width:44px;height:44px;padding:10px;border:0;background:none;transform:translate(-50%,-50%);border-radius:50%;z-index:3}
+    #ball span{display:block;width:24px;height:24px;background:#dc623e;border-radius:50%;border:1px solid #b44c31;box-shadow:0 4px 0 #1c353714;overflow:hidden;position:relative}
+    #ball span:after{content:"";position:absolute;inset:-6px 6px;border-left:2px solid #f8dfc5;border-right:2px solid #f8dfc5;border-radius:50%;transform:rotate(35deg)}
+    #status{min-height:44px;margin:16px 0 12px;font-size:14px;line-height:1.6}footer{border-top:1px solid var(--line);padding:20px 0 30px;color:#65746b;display:flex;justify-content:space-between;gap:15px;font-size:11px;line-height:1.6}
+    @media(max-width:500px){nav{padding:22px 0}.eyebrow{margin-top:30px}h1{letter-spacing:-1.7px}.intro{font-size:13px}.stats{gap:20px}.stats strong{font-size:21px}#start{padding:13px 18px}footer{flex-direction:column;gap:5px}}
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="Main navigation"><a class="brand" href="../../">Aeneas<span>.</span></a><a href="https://github.com/hxy-asdw">GitHub ↗</a></nav>
+  <p class="eyebrow">A SMALL BREAK / NO BIG REASON</p>
+  <h1>Twenty seconds.<br>One <em>very good</em> dog.</h1>
+  <p class="intro">A little fetch, just for fun. <strong>Tap the ball</strong> to send the pug after it, or use the <strong>arrow keys</strong> to steer. How many can you fetch?</p>
+  <div class="game-top"><div class="stats"><div>FETCHED<strong id="score">00</strong></div><div>TIME LEFT<strong id="time">20s</strong></div></div><button id="start" type="button" disabled>Let's play ↗</button></div>
+  <div id="yard" role="group" tabindex="0" aria-label="Playing field. Tap a destination or use arrow keys to move the pug.">
+    <div id="pug" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="50" cy="87" rx="32" ry="6" fill="#1c353714"/>
+        <path d="M77 64c21-16 21 12 5 5" fill="none" stroke="#bba17f" stroke-width="8" stroke-linecap="round"/>
+        <ellipse cx="53" cy="67" rx="30" ry="20" fill="#d4ba91"/>
+        <path d="M33 77v8m35-8v8" stroke="#b69a75" stroke-width="12" stroke-linecap="round"/>
+        <path d="M25 27C8 16 7 58 25 56m49-29c17-11 18 31 0 29" fill="#4b433c"/>
+        <rect x="21" y="24" width="57" height="48" rx="22" fill="#d9c19a"/>
+        <path d="M35 31q15-9 29 0m-25 5q11-6 21 0" stroke="#b19878" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="35" cy="46" rx="10" ry="12" fill="#675849"/><ellipse cx="64" cy="46" rx="10" ry="12" fill="#675849"/>
+        <circle cx="36" cy="46" r="4.5" fill="#202f2e"/><circle cx="63" cy="46" r="4.5" fill="#202f2e"/>
+        <circle cx="37" cy="44" r="1.5" fill="#fff"/><circle cx="64" cy="44" r="1.5" fill="#fff"/>
+        <ellipse cx="50" cy="59" rx="16" ry="11" fill="#4b433c"/><path d="M45 55q5-5 10 0l-5 5z" fill="#1f2c2b"/>
+        <path d="M50 63v7q7 6 7-1v-6" fill="#d58e80"/><path d="M40 62q5 5 10 0q5 5 10 0" stroke="#252e29" fill="none" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <button id="ball" type="button" aria-label="Fetch this ball" disabled><span></span></button>
+    <span class="yard-label" aria-hidden="true">THE LITTLE YARD</span>
+  </div>
+  <p id="status" role="status" aria-live="polite">Your tiny teammate is ready when you are.</p>
+  <noscript><p>This game needs JavaScript. <a href="../../">Back to the lab ↗</a></p></noscript>
+  <footer><span>A tiny experiment, built with AI assistance.</span><a href="../../">Back to the personal lab ↗</a></footer>
+</main>
+<script>
+(() => {
+  const yard = document.getElementById('yard');
+  const pug = document.getElementById('pug');
+  const ball = document.getElementById('ball');
+  const start = document.getElementById('start');
+  const scoreText = document.getElementById('score');
+  const timeText = document.getElementById('time');
+  const status = document.getElementById('status');
+  const keys = new Set();
+  const arrows = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+  let dog = {x: .5, y: .6}, goal = {x: .76, y: .3}, target = null;
+  let running = false, score = 0, remaining = 20, previous = null, frame = 0;
+  const clamp = value => Math.max(.1, Math.min(.9, value));
+
+  function draw() {
+    pug.style.left = `${dog.x * 100}%`;
+    pug.style.top = `${dog.y * 100}%`;
+    ball.style.left = `${goal.x * 100}%`;
+    ball.style.top = `${goal.y * 100}%`;
+    scoreText.textContent = String(score).padStart(2, '0');
+    timeText.textContent = `${Math.ceil(remaining)}s`;
+  }
+
+  function placeBall() {
+    // Spawn across the yard so a fetch always involves a little journey.
+    goal = {x: dog.x < .5 ? .7 + Math.random() * .15 : .15 + Math.random() * .15,
+      y: .16 + Math.random() * .68};
+  }
+
+  function tick(now) {
+    if (!running) return;
+    const elapsed = previous === null ? 0 : (now - previous) / 1000;
+    previous = now;
+    remaining = Math.max(0, remaining - elapsed);
+    if (remaining === 0) {
+      running = false;
+      ball.disabled = true;
+      keys.clear();
+      status.textContent = `${score} ${score === 1 ? 'ball' : 'balls'} fetched. A very good team. Another round?`;
+      start.textContent = 'Play again ↗';
+      draw();
+      return;
+    }
+    const width = yard.clientWidth, height = yard.clientHeight;
+    let dx = Number(keys.has('ArrowRight')) - Number(keys.has('ArrowLeft'));
+    let dy = Number(keys.has('ArrowDown')) - Number(keys.has('ArrowUp'));
+    if (!dx && !dy && target) {
+      dx = (target.x - dog.x) * width;
+      dy = (target.y - dog.y) * height;
+    }
+    const distance = Math.hypot(dx, dy);
+    if (distance) {
+      const step = Math.min(230 * Math.min(elapsed, .05), target && !keys.size ? distance : Infinity);
+      dog.x = clamp(dog.x + dx / distance * step / width);
+      dog.y = clamp(dog.y + dy / distance * step / height);
+    }
+    if (Math.hypot((dog.x - goal.x) * width, (dog.y - goal.y) * height) < 24) {
+      score++;
+      target = null;
+      placeBall();
+    }
+    draw();
+    frame = requestAnimationFrame(tick);
+  }
+
+  start.disabled = false;
+  start.addEventListener('click', () => {
+    cancelAnimationFrame(frame);
+    running = true;
+    score = 0;
+    remaining = 20;
+    previous = null;
+    target = null;
+    dog = {x: .5, y: .6};
+    keys.clear();
+    placeBall();
+    ball.disabled = false;
+    start.textContent = 'Restart ↻';
+    status.textContent = 'Tap the ball, or steer with the arrow keys. Go, little pug!';
+    yard.focus({preventScroll: true});
+    draw();
+    frame = requestAnimationFrame(tick);
+  });
+  yard.addEventListener('pointerdown', event => {
+    if (!running) return;
+    const rect = yard.getBoundingClientRect();
+    target = {x: clamp((event.clientX - rect.left) / rect.width), y: clamp((event.clientY - rect.top) / rect.height)};
+    yard.focus({preventScroll: true});
+  });
+  ball.addEventListener('click', () => { if (running) target = {...goal}; });
+  yard.addEventListener('keydown', event => {
+    if (!running || !arrows.includes(event.key)) return;
+    event.preventDefault();
+    keys.add(event.key);
+    target = null;
+  });
+  window.addEventListener('keyup', event => keys.delete(event.key));
+  window.addEventListener('blur', () => keys.clear());
+  yard.addEventListener('focusout', () => keys.clear());
+  document.addEventListener('visibilitychange', () => {
+    previous = null;
+    keys.clear();
+    if (running) status.textContent = document.hidden ? 'Taking a little pause.' : 'Welcome back. Your round continues!';
+  });
+  draw();
+})();
+</script>
+</body>
+</html>
