@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex" />
     <title>The trail went cold — Aeneas</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=20261125" />
   </head>
   <body data-page="404">
     <header class="not-found-header">
@@ -26,8 +26,12 @@
         <nav class="not-found-actions" aria-label="选择下一条路径" lang="en">
           <a class="not-found-primary" href="/">Return to the trail <span aria-hidden="true">↗</span></a>
           <a href="/lab/">Open the Lab <span aria-hidden="true">↗</span></a>
-          <button type="button" id="another-trail" hidden>Try another rabbit hole <span aria-hidden="true">↗</span></button>
+          <button type="button" id="another-trail" hidden>Draw a clue <span aria-hidden="true">↗</span></button>
         </nav>
+        <div class="not-found-discovery">
+          <p id="trail-clue" role="status"></p>
+          <a class="v2-text-link" id="follow-clue" hidden>沿这条线索走 <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
       <aside class="not-found-meta" aria-label="路径信息">
         <dl>
@@ -41,10 +45,23 @@
     <script>
       (() => {
         document.getElementById("requested-path").textContent = window.location.pathname;
-        const trails = ["/lab/doupo-analysis/", "/garden/workflow-not-prompts/", "/lab/", "/garden/"];
+        const trails = [
+          { clue: "同一组随机数，能把一局人生带回原来的结局吗？", href: "/lab/doupo-analysis/#seed-replay" },
+          { clue: "耐力有限。遇到第一个对手时，你会先格挡还是先出手？", href: "/games/ashline/" },
+          { clue: "一笔测试订单显示「已取消」。换个会话还能看到库存恢复吗？", href: "/lab/#booking-workflow" },
+          { clue: "20 笔订单有 3 笔延迟。你会放行报告里写的「延迟率 3%」吗？", href: "/#excel-review" },
+        ];
         const button = document.getElementById("another-trail");
+        const clue = document.getElementById("trail-clue");
+        const follow = document.getElementById("follow-clue");
+        let last = -1;
         button.addEventListener("click", () => {
-          window.location.assign(trails[Math.floor(Math.random() * trails.length)]);
+          const available = trails.filter((_, index) => index !== last);
+          const trail = available[Math.floor(Math.random() * available.length)];
+          last = trails.indexOf(trail);
+          clue.textContent = trail.clue;
+          follow.href = trail.href;
+          follow.hidden = false;
         });
         button.hidden = false;
       })();

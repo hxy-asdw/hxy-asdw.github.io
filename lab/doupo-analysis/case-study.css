@@ -56,6 +56,27 @@
 .case-seed-hero > div:first-child span { color: var(--accent-deep); font-size: 0.72rem; letter-spacing: 0.14em; }
 .case-seed-hero em { color: var(--accent-deep); font-style: normal; }
 .case-section h3 { margin-block: 36px 20px; font-size: 1.3rem; line-height: 1.5; }
+
+.case-replay {
+  margin: 36px 0;
+  padding: clamp(16px, 4vw, 30px);
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  scroll-margin-top: 86px;
+}
+.case-replay h3 { margin: 0 0 6px; }
+.case-replay .case-replay-caption { margin-bottom: 20px; color: var(--muted); font-size: .9rem; }
+.case-replay-frames { list-style: none; margin: 0; padding: 0; }
+.case-replay-frames li { border-top: 1px solid var(--line); padding: 18px 0; }
+.case-replay-frames strong { color: var(--accent-deep); font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.case-replay-frames small { font-size: .9rem; }
+.case-replay-frames h4 { margin: 12px 0 6px; font-size: 1rem; }
+.case-replay-frames p { margin: 0; font-size: .9rem; }
+.case-replay-track { display: grid; grid-template-columns: 1fr auto; gap: 0 8px; color: var(--muted); font-size: .8rem; }
+.case-replay-track input { grid-column: 1 / -1; width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent-deep); }
+.case-replay-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.case-replay-buttons button { min-height: 44px; padding: 4px 12px; border: 1px solid var(--line-strong); border-radius: 3px; background: var(--bg); color: var(--ink); font: inherit; font-size: .85rem; cursor: pointer; }
+.case-replay-buttons button[aria-disabled="true"] { color: var(--muted); cursor: default; }
 .case-study .v2-text-link, .case-study .lab-brand, .case-study .lab-header-github, .case-study .v2-footer a { min-height: 44px; }
 .case-study .v2-back-top { display: inline-flex; align-items: center; }
 @media (max-width: 680px) {

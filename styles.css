@@ -22,6 +22,8 @@ body[data-page="404"] { --muted: #626c71; min-width: 0; min-height: 100svh; over
 .not-found-actions a:hover, .not-found-actions button:hover { background: var(--surface-muted); }
 .not-found-actions .not-found-primary:hover { background: var(--accent-deep); }
 .not-found-actions a:active, .not-found-actions button:active { background: var(--accent-deep); color: var(--bg); transition: none; }
+.not-found-discovery p:not(:empty) { max-width: 32em; margin: 1.25rem 0 .4rem; line-height: 1.7; }
+.not-found-discovery a:not([hidden]) { display: inline-flex; align-items: center; min-height: 44px; }
 body[data-page="404"] a:focus-visible, body[data-page="404"] button:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 4px; }
 .not-found-meta dl { margin: 0; }
 .not-found-meta dl > div { padding-block: 1.25rem; border-top: 1px solid var(--line); }
@@ -2273,6 +2275,46 @@ h1 {
 
 .v2-index-list {
   padding-bottom: 120px;
+}
+
+.v2-lab-trails {
+  padding-bottom: 32px;
+}
+
+.v2-lab-trails h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.v2-lab-trails ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-lab-trails a,
+.v2-index-details summary {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.v2-index-details summary {
+  gap: 8px;
+  cursor: pointer;
+  color: var(--accent-deep);
+  font-size: .85rem;
+}
+
+.v2-index-details summary::before {
+  content: "+";
+}
+
+.v2-index-details[open] summary::before {
+  content: "−";
 }
 
 .v2-index-item {

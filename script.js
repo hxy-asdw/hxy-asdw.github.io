@@ -143,8 +143,12 @@ function renderIndexPage() {
         <div class="v2-index-item-head"><span>${String(index + 1).padStart(2, "0")}</span><span>${escapeHtml(item.status)}</span></div>
         <h2>${escapeHtml(item.title)}</h2>
         <p class="v2-lab-lead">${escapeHtml(item.summary)}</p>
-        ${labDetails(item)}
         ${projectLinks(item)}
+        ${item.related ? link(item.related.href, item.related.label) : ""}
+        <details class="v2-index-details">
+          <summary aria-label="实验记录：${escapeHtml(item.title)}">实验记录</summary>
+          ${labDetails(item)}
+        </details>
       </article>
     `).join("");
   }
@@ -156,9 +160,40 @@ function renderIndexPage() {
         <p class="v2-lab-lead">${escapeHtml(item.summary)}</p>
         <p class="v2-index-body">${escapeHtml(item.body)}</p>
         ${item.href ? link(`../${item.href}`, "Read note") : ""}
+        ${item.related ? link(item.related.href, item.related.label) : ""}
       </article>
     `).join("");
   }
+}
+
+function setupSeedReplay() {
+  const replay = document.getElementById("seed-replay");
+  if (!replay) return;
+  const frames = [...replay.querySelectorAll("[data-replay-label]")];
+  const controls = replay.querySelector(".case-replay-controls");
+  const range = controls.querySelector("input");
+  const count = controls.querySelector("[data-replay-count]");
+  const previous = controls.querySelector("[data-replay-prev]");
+  const next = controls.querySelector("[data-replay-next]");
+  const last = frames.length - 1;
+  range.max = last;
+
+  function showFrame(index) {
+    range.value = index;
+    frames.forEach((frame, i) => { frame.hidden = i !== index; });
+    range.setAttribute("aria-valuetext", frames[index].dataset.replayLabel);
+    count.textContent = `${index + 1} / ${frames.length}`;
+    previous.setAttribute("aria-disabled", String(index === 0));
+    next.textContent = index === last ? "从头再看" : "下一刻";
+  }
+
+  range.addEventListener("input", () => showFrame(range.valueAsNumber));
+  previous.addEventListener("click", () => {
+    if (range.valueAsNumber > 0) showFrame(range.valueAsNumber - 1);
+  });
+  next.addEventListener("click", () => showFrame((range.valueAsNumber + 1) % frames.length));
+  showFrame(0);
+  controls.hidden = false;
 }
 
 const stageContent = {
@@ -298,4 +333,5 @@ renderLab();
 renderGarden();
 renderSideQuests();
 renderIndexPage();
+setupSeedReplay();
 updateScrollState();

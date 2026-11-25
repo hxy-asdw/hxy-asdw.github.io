@@ -27,7 +27,7 @@
       Object.values(nodes).forEach(node => { node.dx = 0; node.dy = 0; });
       previousMobile = mobile.matches;
     }
-    $('world-instruction').textContent = mobile.matches ? '点一个实验，打开看看。' : '拖动节点，或者点一个实验。';
+    $('world-instruction').textContent = mobile.matches ? '点一下，打开实验。' : '点开节点，也可以拖动它们。';
     width = stage.clientWidth; height = stage.clientHeight;
     const ratio = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
@@ -67,7 +67,6 @@
     worldCopy.style.opacity = mapFade;
     worldCopy.style.transform = 'translateY(' + ((1 - mapFade) * 28) + 'px)';
     worldCopy.setAttribute('aria-hidden', String(mapFade < .4));
-    $('world-hint').style.opacity = mapFade;
     constellation.style.opacity = smooth(.38, .7, progress);
     const ready = progress > .61 || reduced.matches;
     if (ready !== lastReady) { constellation.inert = !ready; constellation.classList.toggle('is-ready', ready); lastReady = ready; }
@@ -160,7 +159,6 @@
     button.addEventListener('pointercancel', () => { button.classList.remove('is-dragging'); drag = null; dismissClick = false; });
     button.addEventListener('click', e => { if (dismissClick) { dismissClick = false; e.preventDefault(); e.stopImmediatePropagation(); } });
   }
-  $('world-instruction').textContent = mobile.matches ? '点一个实验，打开看看。' : '拖动节点，或者点一个实验。';
   const content = window.siteContent || { labs: [], garden: [], now: [], sideQuests: [] };
   const escapeHtml = value => String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
   const siteHref = value => {
@@ -188,18 +186,18 @@
     };
     const node = document.querySelector('[data-node="' + key + '"]');
     node.querySelector('strong').textContent = project.title;
-    node.href = links[0]?.[1] || 'lab/#' + project.id;
-    node.setAttribute('aria-label', '打开 ' + project.title + ' 实验');
+    if (key !== 'doupo') node.href = links[0]?.[1] || 'lab/#' + project.id;
   }
   const workflow = content.garden.find(item => item.id === 'workflow-not-prompts');
   const olist = content.garden.find(item => item.id === 'olist-rabbit-hole');
+  const testNote = content.garden.find(item => item.id === 'what-a-test-proves');
   if (workflow) {
     data.workflow = {
       title: workflow.title,
       type: 'GARDEN / ' + workflow.status,
       summary: workflow.summary,
       media: 'workflow',
-      blocks: [['THE TRAIL', workflow.body], ...(olist ? [[olist.title, olist.summary]] : [])],
+      blocks: [['THE TRAIL', workflow.body], ...(testNote ? [[testNote.title, testNote.summary, 'garden/#' + testNote.id]] : []), ...(olist ? [[olist.title, olist.summary]] : [])],
       links: [[ '读完整笔记', siteHref(workflow.href || 'garden/#' + workflow.id)], ['进入 Garden', 'garden/']],
     };
   }
@@ -207,7 +205,7 @@
     title: '一个保存过程的地方。', type: 'ABOUT / THE PERSON BEHIND THE LAB',
     summary: 'Aeneas 是我在网上使用的名字。我更习惯通过真的做点什么，来搞懂自己还不会的东西。', media: 'about',
     blocks: [['WHY I BUILD','我经常不是因为已经知道该怎么做，才开始一个项目。更多时候只是先碰到一个让我好奇的问题，然后用代码、AI 和 Agent，一点点把它拆开。'],['KEEP THE TRAIL','有些最后变成了完整实验，有些只留下了一篇笔记，还有一些做到一半就停了。我想把这些过程留下来，包括中间绕过的路、改过的想法和还没回答的问题。']],
-    links: [['最近在做什么', '#now'], ['顺手追进去的问题', '#side-quests'], ['更多过程，在 GitHub','https://github.com/hxy-asdw'], ['Email', 'mailto:2870854049@qq.com']],
+    links: [['最近在做什么', '#now'], ['顺手追进去的问题', '#side-quests'], ['更多过程，在 GitHub','https://github.com/hxy-asdw']],
   };
   data.now = {
     title: '最近在做什么。', type: 'NOW / CURRENTLY OPEN', media: 'about',
@@ -222,13 +220,25 @@
     links: [['更多过程，在 GitHub', 'https://github.com/hxy-asdw']],
   };
   const steps = [['INGEST','读取工作簿、识别表结构与字段类型，把后续分析需要的事实先固定下来。'],['PLAN','把自然语言目标拆成可执行计划，并在进入分析前检查计划是否完整、可落地。'],['ANALYZE','用确定性代码完成统计、图表与数值计算，让关键结果不依赖模型临场发挥。'],['REVIEW','通过数值引用审计、独立复核与人工复核，检查结论是否有证据、是否越过边界。'],['RENDER','把经过检查的分析结果组织成结构化 HTML 报告，让读者能从结论回到过程。']];
+  const stepLabels = ['读入', '规划', '分析', '复核', '出稿'];
   const dialog = $('detail-dialog');
   const detailHashes = { doupo: '#doupo-analysis', excel: '#excel-data-report', ashline: '#ashline', workflow: '#workflow-not-prompts', about: '#about', now: '#now', sidequests: '#side-quests' };
-  const hashDetail = hash => Object.keys(detailHashes).find(key => detailHashes[key] === hash);
+  const reviewHash = '#excel-review';
+  const hashDetail = hash => hash === reviewHash ? 'excel' : Object.keys(detailHashes).find(key => detailHashes[key] === hash);
   let returnFocus = null, savedScroll = 0, closeTarget = null, currentDetail = null, pendingClose = false;
   function renderShot(which = 'runtime') {
     const replay = which === 'replay';
-    $('detail-media').innerHTML = '<img src="assets/lab/doupo-analysis/' + (replay ? 'seed93-replay.png' : 'runtime-lab.png') + '" alt="' + (replay ? 'Seed 93 重放记录真实截图' : '离线调试面板真实截图') + '"><div class="shot-switch"><button type="button" data-shot="runtime" aria-pressed="' + !replay + '">运行面板</button><button type="button" data-shot="replay" aria-pressed="' + replay + '">重放记录</button><span class="mono muted">SAVED SNAPSHOT</span></div>';
+    $('detail-media').innerHTML = '<div class="shot-switch"><button type="button" data-shot="runtime" aria-pressed="' + !replay + '">运行面板</button><button type="button" data-shot="replay" aria-pressed="' + replay + '">查看 Seed 93 回放</button><span class="mono muted">SAVED SNAPSHOT</span></div><img src="assets/lab/doupo-analysis/' + (replay ? 'seed93-replay.png' : 'runtime-lab.png') + '" alt="' + (replay ? 'Seed 93 重放记录真实截图' : '离线调试面板真实截图') + '">';
+    if (replay) $('detail-media').insertAdjacentHTML('afterbegin', '<a class="shot-replay-link" href="lab/doupo-analysis/#seed-replay">逐步翻看这局人生 <span aria-hidden="true">↗</span></a>');
+  }
+  function selectWorkflowStep(index) {
+    const [label, copy] = steps[index];
+    const number = String(index + 1).padStart(2, '0');
+    $('workflow-title').textContent = number + ' / ' + label;
+    $('workflow-copy').textContent = copy;
+    $('workflow-count').textContent = number + ' / 05';
+    $('workflow-check').hidden = label !== 'REVIEW';
+    $('detail-media').querySelectorAll('[data-step]').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.step) === index)));
   }
   function showDetail(id, trigger, writeHistory = true) {
     const item = data[id]; if (!item) return;
@@ -247,11 +257,29 @@
     $('detail-summary').textContent = item.summary;
     $('detail-copy').innerHTML = item.blocks.map(block => '<section class="copy-block"><h3>' + escapeHtml(block[0]) + '</h3><p>' + escapeHtml(block[1]) + '</p>' + (block[2] ? '<a href="' + escapeHtml(siteHref(block[2])) + '">继续看看 ↗</a>' : '') + '</section>').join('');
     $('detail-actions').innerHTML = item.links.map((link, i) => '<a href="' + escapeHtml(link[1]) + '"' + (/^https?:/i.test(link[1]) ? ' target="_blank" rel="noreferrer"' : '') + (i ? ' class="secondary"' : '') + '>' + escapeHtml(link[0]) + '<span aria-hidden="true">↗</span></a>').join('');
+    if (item.media === 'ashline') $('detail-media').before($('detail-actions'));
+    else $('detail-copy').after($('detail-actions'));
     dialog.classList.toggle('is-note', !selected); $('detail-switch').hidden = !selected;
     document.querySelectorAll('[data-detail-project]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.detailProject === id)));
-    if (item.media === 'doupo') renderShot();
+    if (item.media === 'doupo') renderShot(trigger?.dataset.node === 'doupo' ? 'replay' : 'runtime');
     if (item.media === 'ashline') $('detail-media').innerHTML = '<img src="assets/lab/ashline/preview.png" alt="Ashline 灰烬前庭的真实游戏画面"><p class="media-label">ASHLINE / 灰烬前庭 · 真实游戏截图</p>';
-    if (item.media === 'excel') $('detail-media').innerHTML = '<div class="workflow"><div class="workflow-top"><span>AN INSPECTABLE PATH</span><span id="workflow-count">01 / 05</span></div><div class="workflow-steps" aria-label="五阶段工作流">' + steps.map((s, i) => '<button type="button" data-step="' + i + '" aria-label="' + s[0] + '" aria-pressed="' + (i === 0) + '">' + String(i + 1).padStart(2, '0') + '</button>').join('') + '</div><div class="workflow-output"><span class="mono" id="workflow-title">01 / INGEST</span><p id="workflow-copy">' + steps[0][1] + '</p></div></div>';
+    if (item.media === 'excel') $('detail-media').innerHTML = `
+      <div class="workflow">
+        <div class="workflow-top"><span>AN INSPECTABLE PATH</span><span id="workflow-count">01 / 05</span></div>
+        <div class="workflow-steps" role="group" aria-label="五阶段工作流">
+          ${stepLabels.map((label, i) => `<button type="button" data-step="${i}" aria-pressed="${i === 0}">${label}</button>`).join('')}
+        </div>
+        <div class="workflow-output"><span class="mono" id="workflow-title">01 / INGEST</span><p id="workflow-copy">${steps[0][1]}</p></div>
+        <section class="workflow-check" id="workflow-check" aria-labelledby="workflow-check-title" hidden>
+          <h3 id="workflow-check-title">轮到你复核</h3>
+          <p>示例数据里，20 笔订单有 3 笔延迟。草稿写着「延迟率 3%」。这句能通过吗？</p>
+          <div role="group" aria-label="选择复核结果">
+            <button type="button" data-review-answer="pass" aria-pressed="false">通过</button>
+            <button type="button" data-review-answer="return" aria-pressed="false">退回</button>
+          </div>
+          <p class="workflow-check-result" id="workflow-check-result" role="status"></p>
+        </section>
+      </div>`;
     if (item.media === 'workflow') $('detail-media').innerHTML = '<div class="note-art"><p class="mono">GROWING / AGENT WORKFLOWS</p><strong>把任务变小。<br>把过程留下。</strong><p>一次个人网站开发中的学习笔记。</p></div>';
     if (item.media === 'about') $('detail-media').innerHTML = '<div class="about-art">I build things<br>to find out.</div>';
     document.querySelector('.detail-body').scrollTop = 0;
@@ -280,7 +308,15 @@
   document.querySelectorAll('[data-detail-project]').forEach(button => button.addEventListener('click', () => showDetail(button.dataset.detailProject)));
   $('detail-media').addEventListener('click', e => {
     const shot = e.target.closest('[data-shot]'); if (shot) { renderShot(shot.dataset.shot); $('detail-media').querySelector('[data-shot="' + shot.dataset.shot + '"]').focus(); return; }
-    const step = e.target.closest('[data-step]'); if (step) { const index = Number(step.dataset.step); $('workflow-title').textContent = String(index + 1).padStart(2, '0') + ' / ' + steps[index][0]; $('workflow-copy').textContent = steps[index][1]; $('workflow-count').textContent = String(index + 1).padStart(2, '0') + ' / 05'; document.querySelectorAll('[data-step]').forEach(b => b.setAttribute('aria-pressed', String(b === step))); }
+    const step = e.target.closest('[data-step]');
+    if (step) selectWorkflowStep(Number(step.dataset.step));
+    const answer = e.target.closest('[data-review-answer]');
+    if (answer) {
+      $('workflow-check').querySelectorAll('[data-review-answer]').forEach(button => button.setAttribute('aria-pressed', String(button === answer)));
+      $('workflow-check-result').textContent = answer.dataset.reviewAnswer === 'return'
+        ? '退回有据。3 ÷ 20 = 15%，草稿把笔数当成了百分比。'
+        : '再核对一下分母。3 是延迟笔数，除以总笔数 20 才能得到延迟率。';
+    }
   });
   for (const section of ['detail-actions', 'detail-copy']) $(section).addEventListener('click', event => {
     const link = event.target.closest('a');
@@ -320,7 +356,10 @@
       return;
     }
     const id = hashDetail(location.hash);
-    if (id && data[id]) { if (!dialog.open || currentDetail !== id) showDetail(id, null, false); }
+    if (id && data[id]) {
+      if (!dialog.open || currentDetail !== id) showDetail(id, null, false);
+      if (location.hash === reviewHash) selectWorkflowStep(3);
+    }
     else if (dialog.open) dialog.close();
   }
   addEventListener('popstate', synchronizeRoute);

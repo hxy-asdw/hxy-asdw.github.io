@@ -17,7 +17,7 @@
     <meta name="twitter:description" content="一次从好奇出发的网页小游戏逆向与源码阅读实验，后来走向批量模拟和随机性。" />
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../styles.css" />
-    <link rel="stylesheet" href="case-study.css" />
+    <link rel="stylesheet" href="case-study.css?v=seed93" />
   </head>
   <body class="lab-site case-study" data-page="case-study">
     <header class="lab-header" data-header>
@@ -98,6 +98,29 @@
           <div><h2 id="randomness">同一局人生，还能再来一次吗？</h2>
             <p>批量运行之后，我开始在意另一件事：看到一局有意思的过程，能不能把它找回来？</p>
             <p>问题延伸到 Seed、RNG 重放和可复现人生。固定随机性，是给观察和调试留下一个可以返回的起点。</p>
+            <section class="case-replay" id="seed-replay" aria-labelledby="seed-replay-title">
+              <h3 id="seed-replay-title">翻看 Seed 93</h3>
+              <p class="case-replay-caption">从保存的模拟记录里挑出六个时刻。</p>
+              <ol class="case-replay-frames" aria-live="polite">
+                <li data-replay-label="6 岁，开局"><strong>6 <small>岁</small></strong><h4>从同一个开局出发</h4><p>用固定初态开局，境界为 1，尚未推进任何一年。</p></li>
+                <li data-replay-label="7 岁，第一次突破"><strong>7 <small>岁</small></strong><h4>第一年就突破了</h4><p>第 1 年的日志先记下突破至斗之气二段，随后又记下了一次连破。</p></li>
+                <li data-replay-label="161 岁，进入斗皇"><strong>161 <small>岁</small></strong><h4>进入斗皇</h4><p>第 155 年升至斗皇一星，这次突破增加了 116 年寿元。</p></li>
+                <li data-replay-label="817 岁，进入斗圣"><strong>817 <small>岁</small></strong><h4>进入斗圣</h4><p>第 811 年升至斗圣一星，这次突破增加了 2,001 年寿元。</p></li>
+                <li data-replay-label="2293 岁，斗圣巅峰"><strong>2,293 <small>岁</small></strong><h4>到达斗圣巅峰</h4><p>第 2,287 年到达普通境界的上限。要再往前，得等不同的条件出现。</p></li>
+                <li data-replay-label="3401 岁，终局"><strong>3,401 <small>岁</small></strong><h4>寿元将尽时走到了终局</h4><p>第 3,395 年触发了源气成帝。固定初态的重放验证回到了同一个结局。</p></li>
+              </ol>
+              <div class="case-replay-controls" hidden>
+                <div class="case-replay-track">
+                  <label for="seed-replay-position">回放进度</label>
+                  <span data-replay-count></span>
+                  <input id="seed-replay-position" type="range" min="0" max="5" value="0" />
+                </div>
+                <div class="case-replay-buttons">
+                  <button type="button" data-replay-prev>上一刻</button>
+                  <button type="button" data-replay-next>下一刻</button>
+                </div>
+              </div>
+            </section>
             <div class="case-seed-hero" aria-label="Seed 93 重放关键指标"><div><span>SEED</span><strong>93</strong></div><div><strong>3,395</strong><span>simulated years</span></div><div><strong>6 → 3,401</strong><span>initial age → final age<br><em>3401 = 6 + 3395</em></span></div><div><strong>20,291</strong><span>53-bit random values</span></div></div>
             <dl class="case-facts"><div><dt>Seed 93</dt><dd>从 1 开始顺序搜索得到的首个成功候选，走源气成帝路径；这是“找到成功即停止”的选择样本。</dd></div><div><dt>3,395 年 → 3,401 岁</dt><dd>3,395 是主局调用 rollYear 的次数；年龄从 6 岁开始，因此终局为 6 + 3,395 = 3,401 岁。415 条原始日志不是年度推进次数。</dd></div><div><dt>20,291 次随机取值</dt><dd>这是单局从固定初态到成帝取得的 53 位随机数数量，包含事件内部临时模拟；不是底层 32 位 RNG 输出次数。</dd></div></dl>
             <p>重放器使用 xoshiro128**、splitmix32 初始化和 53 位随机数适配。每次重建初态与 RNG，重新执行原始 rollYear；事件里的临时模拟也会消耗随机数。</p>
@@ -122,9 +145,9 @@
     </main>
     <footer class="v2-footer">
       <div><p class="v2-eyebrow">ELSEWHERE</p><p class="v2-footer-note">Back to the main thread.</p></div>
-      <div class="v2-footer-links"><a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer"><span>GitHub</span><span>hxy-asdw ↗</span></a><a href="mailto:2870854049@qq.com"><span>Email</span><span>2870854049@qq.com ↗</span></a></div>
+      <div class="v2-footer-links"><a href="https://github.com/hxy-asdw" target="_blank" rel="noreferrer"><span>GitHub</span><span>hxy-asdw ↗</span></a></div>
       <a class="v2-back-top" href="../../">Home ↑</a>
     </footer>
-    <script src="../../script.js" defer></script>
+    <script src="../../script.js?v=seed93" defer></script>
   </body>
 </html>
